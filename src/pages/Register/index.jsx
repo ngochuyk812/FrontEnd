@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import './style.scss'
 import { useState } from 'react';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../redux/slice/registerSlice';
 import { Link, useNavigate } from 'react-router-dom';
