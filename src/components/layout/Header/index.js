@@ -23,8 +23,8 @@ function Index(props) {
             <li><Link onClick={()=>handleNav("/contact")  } to={"/contact"} className={active ==="/contact" ? 'active' : ''}>Liên hệ</Link></li>
         </ul>
         <div class="navbar-user">
-            <Link className='cart_icon'><i class="fa fa-shopping-cart"></i><span className='quantity_cart'>2</span></Link>
-            <Link><i class="fa fa-user"></i></Link>
+            <Link to={'/checkout'} className='cart_icon'><i class="fa fa-shopping-cart"></i><span className='quantity_cart'>2</span></Link>
+            <Link to={'/profile'}><i class="fa fa-user"></i></Link>
             <Link className='hide menu_mobile' onClick={openNavMobile}><i class="fa fa-bars"></i></Link>
         </div>
         <div className='menu_item_mobile' style={openNav ?{display: 'flex'}:{display: 'none'} }>

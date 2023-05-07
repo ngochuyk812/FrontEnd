@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import profileSlice from "./slice/profile";
+
+import authSlice from "./slice/authSlice";
+import notifySlice from './slice/notifySlice';
+import registerSlice from './slice/registerSlice';
 export const store  = configureStore({
   reducer: {
-    profile: profileSlice
+    auth: authSlice,
+    register: registerSlice,
+    notify: notifySlice
         }
 })
  
