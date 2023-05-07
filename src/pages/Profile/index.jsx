@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './style.scss'
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../redux/slice/profile';
+import { logout } from '../../redux/slice/authSlice';
 Index.propTypes = {
     
 };
@@ -10,8 +10,9 @@ function Index(props) {
     const dispatch = useDispatch()
 
     const profile = useSelector(state =>{
-        return state.profile.account
+        return state.auth
     })
+    console.log(profile);
     const handleLogout = ()=>{
         dispatch(logout())
     }
@@ -19,7 +20,7 @@ function Index(props) {
         <div>
           
            <h1>Profile</h1>
-           <h1>{profile.user}</h1>
+           <h1></h1>
             <button onClick={handleLogout}>Logout</button>
         </div>
     );

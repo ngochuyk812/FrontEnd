@@ -8,7 +8,6 @@ import Login from '../pages/Login'
 import Orders from '../pages/Orders'
 import Register from '../pages/Register'
 import Profile from '../pages/Profile'
-
 const publicRoutes =[
     {path:"/", component: Home },
     {path:"/products", component: Products},
@@ -17,8 +16,12 @@ const publicRoutes =[
     {path:"/forgotPassword", component: ForgotPassword },
     {path:"/login", component: Login },
     {path:"/register", component: Register },
-]
 
+]
+const authRoutes = [
+   
+
+]
 const privateRoutes =[
     {path:"/checkout", component: Checkout },
     {path:"/orders", component: Orders },
@@ -27,4 +30,4 @@ const privateRoutes =[
 ]
 
 
-export {publicRoutes, privateRoutes}
+export {publicRoutes, privateRoutes, authRoutes}
