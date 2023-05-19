@@ -1,5 +1,5 @@
 import Home from '../pages/Home'
-import Products from '../pages/Products'
+import Products from '../pages/Products/Products'
 import Checkout from '../pages/Checkout'
 import Contact from '../pages/Contact'
 import Detail from '../pages/Detail'

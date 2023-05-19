@@ -1,0 +1,54 @@
+@keyframes aniLoadProduct {
+    from{
+        opacity: 0;
+    }to{
+         opacity: 1;
+     }
+}
+.card_img{
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 283px;
+    transition: all 0.5s ease-in-out;
+
+}
+.card{
+    background: rgb(255,255,255);
+    background: linear-gradient( rgba(255,255,255,1) 63%, rgba(168,161,214,1) 100%, rgba(251,251,251,1) 100%);
+    animation: aniLoadProduct 1s forwards;
+    height: 542px;
+    box-shadow: 13px 15px 5px 0px rgba(0,0,0,0.16);
+    -webkit-box-shadow: 13px 15px 5px 0px rgba(0,0,0,0.16);
+    -moz-box-shadow: 13px 15px 5px 0px rgba(0,0,0,0.16);
+}
+.card:hover .card_img{
+    height: 200px;
+
+}
+.div-cart-title{
+    height: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+.card-title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.color_product{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+.list_color{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
