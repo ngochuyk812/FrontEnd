@@ -17,7 +17,10 @@ export const Product = ({product})=>{
                         ))
                     }
                 </div>
-                <a   className="btn btn-primary">Go somewhere</a>
+                <div className='button_detail' style={{display:'flex', justifyContent:'space-around'}}>
+                    <a   className="btn btn-primary"><i style={{color:'black'}} className="fa-solid fa-eye"></i></a>
+                    <a   className="btn btn-primary"><i style={{color:'black'}} className="fa-solid fa-cart-plus"></i></a>
+                </div>
             </div>
         </div>
     )

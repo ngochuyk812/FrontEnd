@@ -15,6 +15,8 @@ function Products(props) {
     const status = useSelector(state=> state.products.status)
     const products = useSelector(state=> state.products.productsFilter)
     const [numberPage, setNumberPage] = useState(1)
+    const [search, setSearch] = useState('')
+
     const [pageActive, setPageActive] = useState(0)
     const [productActive, setProductActive] = useState([])
     const list_gall = ['https://cdn.sforum.vn/sforum/wp-content/uploads/2023/04/apple-watch-nen-mua-loai-nao-tot-7.jpg', 'https://cdn.tgdd.vn/Files/2021/10/08/1388854/applewatchs7_2_1280x720-800-resize.jpg','https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/apple-watch-update-lead-1662748036.jpg','https://www.xtmobile.vn/vnt_upload/news/11_2022/30/apple-watch-series-8-vs-watch-se-2022-avatar.jpg','https://t2.tudocdn.net/638657?w=660']
@@ -58,47 +60,69 @@ function Products(props) {
     return (
         <div>
             {status === 'loading' ? <Loading></Loading> : ""}
-            <div className='galleries_products'>
-                {
-                    list_gall.map((tmp,index)=>{
-                        let css = {backgroundImage: `url(${tmp})`, backgroundSize:'cover', backgroundRepeat:'no-repeat', marginTop:'60px'}
-                        return(
-                            <div key={index} onMouseEnter={(e)=>onMouseEnterHandler(e)}  className={index === Math.floor(list_gall.length/2) ? 'item_galleries active' : 'item_galleries '} style={css}>
-                                <div className='box_galleries'>
-                                    <button  className={index == Math.floor(list_gall.length/2) ? 'btn btn-primary butotn_view_page ani' : 'btn btn-primary butotn_view_page'}>Xem bài viết</button>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
+            <div className='icon_filter_mobile'>
+                <a href='#fiter_mobile'><i className="fa-solid fa-filter"></i></a>
             </div>
-            <p className='container' style={{marginTop:'60px'}}>Trang chủ/ Sản phẩm</p>
+            <div className='filter_products_mobile' id='fiter_mobile'>
+                <Filter  search = {search}  ></Filter>
+            </div>
 
             <div className='main_products container'>
 
                 <div className='filter_products'>
-                    <Filter products={products}></Filter>
+                    <Filter  search = {search}  ></Filter>
                 </div>
-                <div className='list_product' id='list_product' >
-                    {productActive ?
-                        productActive.map(tmp=>(
-                            <Product key={tmp.id} product ={tmp}/>
-                        ))
-                    :
-                    ''
+
+                <div style={{  border: '1px solid lightgray',
+                    padding: 15, width: '100%'}}>
+                    <div className="" style={{marginBottom:'10px', borderBottom:'1px solid lightgray', paddingBottom:'10px'}}>
+
+                        <div className="row height d-flex justify-content-center align-items-center">
+
+                            <div className="col-md-6">
+
+                                <div className="form">
+                                    <i className="fa fa-search"></i>
+                                    <input type="text" onChange={(e)=>setSearch(e.target.value)} className="form-control form-input"
+                                           placeholder="Search anything..."/>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    {products.length !== 0 ?
+                        <div className='list_product' id='list_product' >
+                            {productActive ?
+                                productActive.map(tmp=>(
+                                    <Product key={tmp.id} product ={tmp}/>
+                                ))
+                                :
+                                ''
+                            }
+                        </div>:
+                        <div className='list_product' id='list_product' >
+                            <p>Không có sản phẩm hợp lệ</p>
+
+                        </div>
                     }
+                    <div className="pagination">
+                        <a href="#list_product" onClick={()=>changePage(-1)} className="page">&laquo;</a>
+                        {
+                            [...Array(numberPage)].map((tmp,index)=>(<a key={index} href="#list_product" onClick={()=>changePage(index)} className={pageActive === index ? "page active":"page"}>{index + 1}</a>))
+                        }
+                        <a href="#list_product" onClick={()=>changePage(-2)} className="page">&raquo;</a>
+                    </div>
                 </div>
+
+
             </div>
 
-            <div className="pagination">
-                <a href="#list_product" onClick={()=>changePage(-1)} className="page">&laquo;</a>
-                {
-                    [...Array(numberPage)].map((tmp,index)=>(<a key={index} href="#list_product" onClick={()=>changePage(index)} className={pageActive === index ? "page active":"page"}>{index + 1}</a>))
-                }
-                <a href="#list_product" onClick={()=>changePage(-2)} className="page">&raquo;</a>
-            </div>
+
 
         </div>
+
     );
 }
 

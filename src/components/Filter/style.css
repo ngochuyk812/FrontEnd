@@ -315,3 +315,12 @@
 .filter-page #fs_rating{
     border: none !important;
 }
+.sel_country{
+    width: 100%;
+    padding: 6px 0 ;
+    border: 1px solid lightgray;
+}
+.sel_country:focus-visible{
+    border: 1px solid lightgray;
+    outline: none;
+}

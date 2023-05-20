@@ -1,34 +1,52 @@
 import './style.css'
 import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {filterProducts} from "../../redux/slice/productSlice";
+import {getCountry, getColors, filter} from "./javascript";
 
-export const Filter = ({products})=>{
+export const Filter = ({setSearch, search})=>{
+    const products = useSelector(state => state.products.products)
     const STEP  = 5
     const MIN =0
     const MAX = 800
     const [minRange, setMinRange] = useState(0)
     const [maxRange, setMaxRange] = useState(800)
+    const [category, setCategory] = useState('')
+    const [colors, setColors] = useState([])
+    const [country, setCountry] = useState('')
+
     const dispatch = useDispatch()
-    const handleMinChange = e => {
+    const handleMinChange = (e) => {
         e.preventDefault();
         const newMinVal = Math.min(+e.target.value, maxRange - STEP);
-         setMinRange(newMinVal);
+        setMinRange(newMinVal);
     };
-
+    const minPos = ((minRange - MIN) / (MAX - MIN)) * 100;
+    const maxPos = ((maxRange - MIN) / (MAX - MIN)) * 100;
     const handleMaxChange = e => {
         e.preventDefault();
         const newMaxVal = Math.max(+e.target.value, minRange + STEP);
-         setMaxRange(newMaxVal);
+        setMaxRange(newMaxVal);
     };
-    const hanleFilter = ()=>{
-        let filter = products.filter(tmp=>tmp.price >= minRange && tmp.price <= maxRange)
-
+    const handleCategory = (e)=>{
+        if(e === category)
+            setCategory('')
+        else
+            setCategory(e)
     }
-    const minPos = ((minRange - MIN) / (MAX - MIN)) * 100;
-    const maxPos = ((maxRange - MIN) / (MAX - MIN)) * 100;
+    const handleChangeContry = (e)=>{
+        setCountry(e.target.value)
+    }
+    const handleColor = (color) =>{
+      let colorsFilter =  colors.filter(tmp=>tmp === color)
+        if(colorsFilter.length === 0)
+            setColors([...colors, color])
+        else
+            setColors(colors.filter(tmp=>tmp !== color))
+    }
     useEffect(()=>{
-    },[minRange,maxRange])
+        dispatch(filterProducts(filter({minRange,maxRange,category,colors,country, search}, products)))
+    },[minRange,maxRange,category,colors,country, search])
     return (
 
         <div className="container-fluid filter-page">
@@ -92,77 +110,50 @@ export const Filter = ({products})=>{
                 </section>
                 <section className="col-12" id="fs_distance_body">
             <span className="heading">
-              By Distance
+              By Country
             </span>
                     <div className="contents">
-                        <ul>
-                            <li>
-                                <span>From 1 km to 3 km</span>
-                                <span className="text-right" />
-                            </li>
-                            <li className="active">
-                                <span>From 4 km to 7 km</span>
-                                <span className="text-right">
-                    <i className="fa fa-check" />
-                  </span>
-                            </li>
-                            <li>
-                                <span>From 8 km to 10 km</span>
-                                <span className="text-right" />
-                            </li>
-                        </ul>
+                        <select className='sel_country'
+                                value={country}
+                                onChange={handleChangeContry}
+                        >
+                            <option value=''>Country</option>
+                            {getCountry(products).map(tmp=>{
+                                return (<option key={tmp} value={tmp}>{tmp}</option>)
+                            })}
+                        </select>
                     </div>
                 </section>
                 <section className="col-12" id="fs_time_body">
             <span className="heading">
-              By Time
+              By Category
             </span>
                     <div className="contents">
                         <ul>
-                            <li>
-                                <span>Less than 30 Min</span>
+                            <li className={category === 'smart' ?"category active" : "category "} onClick={()=>handleCategory('smart')}>
+                                <span>Smart</span>
                                 <span className="text-right" />
                             </li>
-                            <li>
-                                <span>30 Min - 45 Min</span>
-                                <span className="text-right" />
-                            </li>
-                            <li className="active">
-                                <span>45 Min - 55 Min</span>
+                            <li className={category === 'classic' ?"category active" : "category "} onClick={()=>handleCategory('classic')}>
+                                <span>Classic</span>
                                 <span className="text-right">
-                    <i className="fa fa-check" />
-                  </span>
+                                </span>
                             </li>
                         </ul>
                     </div>
                 </section>
                 <section className="col-12" id="fs_rating">
             <span className="heading">
-              By Rating
+              By Color
             </span>
-                    <div className="contents">
-                        <ul>
-                            <li>
-                  <span>
-                    <i className="fa fa-star dark" />
-                    <i className="fa fa-star" />
-                    <i className="fa fa-star" />
-                    <i className="fa fa-star" />
-                    <i className="fa fa-star" />
-                  </span>
-                                <span className="text-right" />
-                            </li>
-                            <li>
-                  <span>
-                    <i className="fa fa-star dark" />
-                    <i className="fa fa-star dark" />
-                    <i className="fa fa-star" />
-                    <i className="fa fa-star" />
-                    <i className="fa fa-star" />
-                  </span>
-                                <span className="text-right" />
-                            </li>
-                        </ul>
+                    <div className="contents" style={{display:'flex', justifyContent:'center', gap:20, flexWrap:'wrap', } }>
+                        {getColors(products).map(tmp=>{
+                            return (<div  style={
+                                colors.filter(tmp2=>tmp2 === tmp).length !== 0 ?
+                                    {backgroundColor:tmp, width:30, height: 30, border:'2px solid red'} :
+                                    {backgroundColor:tmp, width:30, height: 30, border:'1px solid black'}
+                            } onClick={()=>handleColor(tmp)}></div>)
+                        })}
                     </div>
                 </section>
             </div>

@@ -6,7 +6,7 @@ import { Route,BrowserRouter, redirect , Routes } from 'react-router-dom';
 import PrivateRoutes from './components/PrivateRoute/PrivateRoute'
 import { authRoutes, privateRoutes, publicRoutes } from './routes';
 import { useDispatch, useSelector } from 'react-redux';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import Notify from './components/Notify/Notify';
 import {colors} from './components/Notify/Notify';
 

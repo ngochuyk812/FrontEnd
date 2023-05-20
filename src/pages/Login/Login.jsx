@@ -9,11 +9,11 @@ import Notify from '../../components/Notify/Notify';
 import {colors} from '../../components/Notify/Notify';
 import { addNotify } from '../../redux/slice/notifySlice';
 
-Index.propTypes = {
+Login.propTypes = {
     
 };
 
-function Index(props) {
+function Login(props) {
     const [username, setUsername] = useState('')
     const [pass, setPass] = useState('')
     const auth = useSelector(state =>{
@@ -101,4 +101,4 @@ function Index(props) {
     );
 }
 
-export default Index;
+export default Login;
