@@ -1,0 +1,16 @@
+.item_mini_cart{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.content_item_mini_cart p{
+  font-size: 14px;
+  width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+
+}

@@ -12,7 +12,7 @@
     justify-content: space-between;
     padding: 0 80px;
     border: 1px solid lightgray;
-    img{
+    >img{
         width: 70px;
         height: 55px;
     }
@@ -115,5 +115,33 @@
         
     }
     
-   
+
   }
+  @keyframes animation_cartmini {
+    from{
+        height: 0;
+    }to{
+        height: 300px;
+    }
+  }
+  .cart_icon .minicart_header{
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    animation: animation_cartmini 1s forwards;
+}
+
+.cart_icon{
+    position: relative;
+}
+.cart_icon:hover .minicart_header{
+    display: flex;
+    opacity: 1;
+
+}

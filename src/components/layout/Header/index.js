@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './style.scss'
 import { Link } from 'react-router-dom';
 import logo from '../../../images/logo.png'
+import MiniCart from '../../MiniCart/MiniCart';
 
 function Index(props) {
     const [active, setActive] = useState(window.location.pathname);
@@ -27,8 +28,16 @@ function Index(props) {
                              className={active === "/contact" ? 'active' : ''}>Liên hệ</Link></li>
                </ul>
                <div className="navbar-user">
-                   <Link to={'/checkout'} className='cart_icon'><i className="fa fa-shopping-cart"></i><span
-                       className='quantity_cart'>2</span></Link>
+                   <Link  className='cart_icon'>
+                        <Link to={'/checkout'} className='cart_icon'>
+                        <i className="fa fa-shopping-cart"></i>
+                        <span className='quantity_cart'>2</span>
+                        </Link>
+                        <div className='minicart_header'>
+                            <MiniCart></MiniCart>
+                        </div>
+                       
+                       </Link>
                    <Link to={'/profile'}><i className="fa fa-user"></i></Link>
                    <Link className='hide menu_mobile' onClick={openNavMobile}><i className="fa fa-bars"></i></Link>
                </div>
