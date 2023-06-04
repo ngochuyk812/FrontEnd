@@ -1,0 +1,136 @@
+.container {
+    width: 100%;
+    height: auto;
+
+
+}
+
+p {
+    margin: 0 !important;
+
+}
+
+.slide-show-img {
+    .slick-slider {
+        img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            object-position: center;
+
+        }
+    }
+}
+
+.slide-show-text {
+    margin-top: 50px;
+
+    .slick-slider {
+        img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            object-position: center;
+
+        }
+
+        div {
+            font-size: 50px;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+        }
+    }
+
+    .slick-dots {
+        button {
+            display: none;
+        }
+    }
+
+
+}
+
+.item-content {
+    .item-title {
+        margin-top: 20px;
+    }
+
+    .item-price {
+        color: red;
+
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .slide-show-text {
+        .slick-slider {
+            div {
+                font-size: 25px;
+            }
+        }
+    }
+
+    .item-content {
+        .item-title {
+            margin-top: 5px;
+        }
+
+        .item-price {
+            color: red;
+
+        }
+    }
+
+}
+
+.see-all {
+    text-align: center;
+    margin-top: 20px;
+
+    a {
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 20px;
+        color: white !important;
+        background-color: black;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
+
+/* iPad */
+@media only screen and (min-width: 481px) and (max-width: 1024px) {
+    .home-item {
+        width: 200 !important;
+        height: 310px !important;
+
+        button {
+            font-size: 10px;
+            padding: 1px;
+            background-color: white;
+
+        }
+
+        p {
+            font-size: 15px
+        }
+    }
+
+    .slide-show-text {
+        .slick-slider {
+
+            div {
+                font-size: 40px;
+            }
+        }
+    }
+}
+
+/* PC */
+@media only screen and (min-width: 1025px) {
+    /* CSS styles for PC */
+}
