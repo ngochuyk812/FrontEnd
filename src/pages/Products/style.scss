@@ -1,0 +1,165 @@
+
+.list_product{
+  display: grid;
+  grid-template-columns: auto auto auto ;
+  align-content: center;
+  justify-content: center;
+  gap: 40px;
+
+  flex: 1;
+  width: 100%;
+}
+.list_product > div{
+}
+.list_product > div img{
+
+}
+.main_products{
+  display: flex;
+  margin-top: 100px;
+  justify-content: center;
+  gap: 20px;
+
+}
+.filter_products{
+  position: relative;
+  width: 300px;
+}
+//galleries
+.galleries_products{
+  position: relative;
+  height: 400px;
+  display: flex;
+
+}
+.item_galleries{
+  height: 500px;
+  width: 300px;
+  transition: all 1s ease;
+  position: relative;
+}
+.item_galleries .content_item_galleries{
+  position: absolute;
+}
+.item_galleries.active{
+  width: 800px;
+}
+.box_galleries{
+}
+.butotn_view_page{
+  opacity: 0;
+}
+.butotn_view_page.ani{
+  display: flex;
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  animation: aniLoadProduct 2s forwards;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.page {
+  display: block;
+  padding: 10px;
+  border: 1px solid #ddd;
+  color: #333;
+  text-decoration: none;
+}
+
+.page.active {
+  background-color: #007bff;
+  color: #fff;
+}
+.form{
+
+  position: relative;
+}
+
+.form .fa-search{
+
+  position: absolute;
+  top:12px;
+  left: 20px;
+  color: #9ca3af;
+
+}
+
+.form span{
+
+  position: absolute;
+  right: 17px;
+  top: 13px;
+  padding: 2px;
+  border-left: 1px solid #d1d5db;
+
+}
+
+.left-pan{
+  padding-left: 7px;
+}
+
+.left-pan i{
+  padding-left: 10px;
+}
+
+.form-input{
+
+  height: 38px;
+  text-indent: 33px;
+  border-radius: 10px;
+}
+.icon_filter_mobile, .filter_products_mobile{
+  display: none;
+}
+@media only screen and (max-width: 1400px) {
+  .filter_products{
+    display: none;
+  }
+  .filter_products_mobile{
+    display: flex;
+
+  }
+  .icon_filter_mobile{
+    display: flex;
+  }
+}
+@media only screen and (max-width: 990px) {
+  .list_product{
+    grid-template-columns: auto auto ;
+    align-content: center;
+    justify-content: center;
+    gap: 40px;
+
+    flex: 1;
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .list_product{
+    grid-template-columns: auto  ;
+    align-content: center;
+    justify-content: center;
+    gap: 40px;
+
+    flex: 1;
+    width: 100%;
+  }
+}
+.icon_filter_mobile{
+  position: fixed;
+  left: -15px;
+  top: 50%;
+  padding: 5px 15px;
+  padding-left: 25px;
+  color: white;
+  cursor:pointer;
+  border-radius: 55px;
+  background-color: rgba(142, 126, 236, 0.85);
+}
