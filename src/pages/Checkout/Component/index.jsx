@@ -46,5 +46,6 @@ function Item({ item }) {
     </div>
   );
 }
-
+export { default as Cash } from "../Component/Modal/Cash";
+export { default as ZaloPay } from "../Component/Modal/ZaloPay";
 export default Item;
