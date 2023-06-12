@@ -3,9 +3,8 @@ import './style.css'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { addNotify, removeNotify } from '../../redux/slice/notifySlice'
+import { addNotify, removeNotify } from '../../../redux/slice/notifySlice'
 function MiniCart({cart}) {
-    
     return (
         <div className='item_mini_cart'>
             <img width={50} height={50} src={cart.product.images[0]}/>

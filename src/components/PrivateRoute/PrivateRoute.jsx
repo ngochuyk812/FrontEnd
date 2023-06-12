@@ -7,10 +7,10 @@ function PivateRoute({ Page,path }) {
     const auth = useSelector(state =>{
         return state.auth 
     })
-    if(!auth.user){
+    if(!auth.user){ 
         dispatch(setLinkTo(path))
     }
     return auth.user ? Page : <Navigate to="/login" />
-}
+}   
 
 export default PivateRoute;
