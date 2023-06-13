@@ -1,0 +1,33 @@
+.container__feedback {
+  .container__feedback__name {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .container__feedback__title {
+    width: 95%;
+    background-color: #f2f2f2;
+    border-radius: 6px;
+    margin-left: 20px;
+    margin-top: 20px;
+    padding: 0 0 0 10px;
+  }
+}
+.container__feedback__name {
+  margin: 20px 0;
+  .container__name__image {
+    h6 {
+      margin-left: 20px;
+    }
+  }
+}
+.container__feedback__title {
+  margin: 20px 0;
+}
+
+.container__feedback__name--border {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}

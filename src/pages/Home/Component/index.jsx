@@ -5,6 +5,8 @@ import { addNotify } from "../../../redux/slice/notifySlice";
 import { colors } from "../../../components/Notify/Notify";
 
 import "./style.scss";
+import {Link} from "react-router-dom";
+import React from "react";
 
 function Item({ product }) {
   const dispatch = useDispatch();
@@ -77,7 +79,9 @@ function Item({ product }) {
     }
   };
   return (
-    <div className="home-item" href="">
+    < Link to={'/detail'} className="home-item active" href="">
+
+
       <img
         className="item-img"
         src={"http://localhost:3000/" + product.images[0]}
