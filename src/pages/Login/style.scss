@@ -1,7 +1,7 @@
 
 .login_form{
     padding: 50px 400px;
-    display: flex; 
+    display: flex;
     .backgroud{
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
@@ -28,18 +28,18 @@
 @media screen and (max-width: 1500px) {
     .login_form{
         padding: 50px 250px;
-        
+
     }
-    
-   
+
+
   }
   @media screen and (max-width: 1170px) {
     .login_form{
         padding: 50px 100px;
-        
+
     }
-    
-   
+
+
   }
   @media screen and (max-width: 800px) {
     .login_form{
@@ -58,5 +58,5 @@
     .forgot{
         text-align: left;
     }
-   
+
   }
