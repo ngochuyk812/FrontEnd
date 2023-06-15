@@ -1,8 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit';
-import profileSlice from "./slice/profile";
-export const store  = configureStore({
+import { configureStore } from "@reduxjs/toolkit";
+
+import authSlice from "./slice/authSlice";
+import notifySlice from "./slice/notifySlice";
+import registerSlice from "./slice/registerSlice";
+import productSlice from "./slice/productSlice";
+import cartSlice from "./slice/cartSlice";
+import orderSlice from "./slice/orderSlice";
+export const store = configureStore({
   reducer: {
-    profile: profileSlice
-        }
-})
- 
+    auth: authSlice,
+    register: registerSlice,
+    notify: notifySlice,
+    product: productSlice,
+    cart: cartSlice,
+    order: orderSlice,
+  },
+});

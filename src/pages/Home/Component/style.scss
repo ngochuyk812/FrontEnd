@@ -1,0 +1,118 @@
+.home-product {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .home-item {
+        background-color: white;
+        width: 250px;
+        border-radius: 10px;
+        padding: 10px 0px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        align-items: center;
+        border: 1px solid #333;
+        cursor: pointer;
+        color: black;
+        margin-top: 10px;
+        margin-right: 10px;
+
+        .item-addCart {
+            border-radius: 30px;
+            border: none;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .item-delCart {
+            border-radius: 30px;
+            border: none;
+            background-color: rgb(255, 3, 3);
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .item-img {
+            width: 100%;
+            height: 180px;
+            background-color: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 180px;
+                height: 200px;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+
+
+
+        .item-content {
+            padding: 10px;
+
+            .item-title {
+                font-weight: bold;
+                color: #333;
+                height: 120px;
+            }
+        }
+    }
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 1024px) {
+    .home-item {
+        width: 200 !important;
+        height: 310px !important;
+
+        button {
+            font-size: 10px;
+            padding: 1px;
+            background-color: white;
+
+        }
+
+        p {
+            font-size: 15px
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .home-item {
+        width: 100px !important;
+        height: 170px !important;
+
+        button {
+            margin: 0;
+            font-size: 8px;
+            padding: 5px !important;
+            background-color: white;
+
+
+
+        }
+
+        p {
+            font-size: 10px
+        }
+    }
+}
