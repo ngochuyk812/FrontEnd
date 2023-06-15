@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './style.scss'
 import { Link } from 'react-router-dom';
 import logo from '../../../images/logo.png'
-import MiniCart from '../../MiniCart';
+import MiniCart from '../../MiniCart/MiniCart';
 
 function Index(props) {
     const [active, setActive] = useState(window.location.pathname);

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import './style.css'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { addNotify, removeNotify } from '../../redux/slice/notifySlice'
-import ItemCartMini from "./ItemCartMini/ItemCartMini"
+import ItemCartMini from "../ItemCartMini/ItemCartMini"
 function MiniCart({color, title, content}) {
     const carts =[
         {
@@ -312,13 +312,7 @@ function MiniCart({color, title, content}) {
           },
           
     ]
-    const auth = useSelector(state =>{
-      return state.auth.user 
-  })
-
     return (
-    <>
-    {auth? 
     <div className='main_mini_cart'>
         <div className='header_mini_cart'>
         <h6 style={{color:"black", fontWeight:"600"}}>Cart</h6>
@@ -330,17 +324,7 @@ function MiniCart({color, title, content}) {
         </div>
         <Link to={"/checkout"} style={{marginTop: "10px", color: "#3b71ca", textAlign:"center"}}>Cart view </Link>
 
-    </div> : 
-    <div style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
-      <p style={{textAlign:'center', paddingTop:'10px'}}>Vui lòng đăng nhập </p>
-      <button className='login_minicart' >Đăng nhập</button>
     </div>
-    
-  
-  
-  }
-    </>  
-    
     )
 }
 
