@@ -79,8 +79,7 @@ function Item({ product }) {
     }
   };
   return (
-    <div>
-    < Link to={'/detail'} className="home-item active" href=""/>
+    < Link to={'/detail'} className="home-item active" href="">
 
 
       <img
