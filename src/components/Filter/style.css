@@ -1,0 +1,326 @@
+.filter-page{
+    border: 1px solid lightgray;
+
+}
+
+.filter-page .filter-page {
+    position: relative;
+    padding: 10px 15px 0;
+}
+
+.filter-page #fs_app > section:not(#fs_header_bar){
+    padding-top: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.filter-page #fs_header_bar{
+    padding-top: 25px;
+    padding-bottom: 0;
+}
+
+.filter-page #fs_page_title{
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: -15px;
+}
+
+.filter-page .heading{
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.filter-page .btn{
+    width: 100%;
+    background: transparent;
+    border: 1px solid #ff286c;
+    border-radius: 2px;
+    padding: 3px;
+    color: #ff286c;
+    font-size: 14px;
+    font-weight: 300 !important;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.filter-page .active .btn{
+    background: #ff286c;
+    color: #fff;
+}
+
+.filter-page #fs_price_body .line1{
+    height: 4px;
+    margin-top: 10px;
+    height: 7px;
+
+    width: 100%;
+    background: black;
+}
+.wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-top: 1.6rem;
+    height: calc(16px + 1.6rem);
+}
+.input-wrapper {
+    width: calc(100% + 16px);
+    margin: 0 calc(16px / -2);
+    position: absolute;
+    height: 16px;
+}
+.control-wrapper {
+    width: 100%;
+    position: absolute;
+    height: 16px;
+}
+.input {
+    position: absolute;
+    width: 100%;
+    pointer-events: none;
+    appearance: none;
+    height: 100%;
+    opacity: 0;
+    z-index: 3;
+    padding: 0;
+}
+.input::-ms-track {
+    appearance: none;
+    background: transparent;
+    border: transparent;
+}
+.input::-moz-range-track {
+    appearance: none;
+    background: transparent;
+    border: transparent;
+}
+.input:focus::-webkit-slider-runnable-track {
+    appearance: none;
+    background: transparent;
+    border: transparent;
+}
+.input::-ms-thumb {
+    appearance: none;
+    pointer-events: all;
+    width: 16px;
+    height: 16px;
+    border-radius: 0px;
+    border: 0 none;
+    cursor: grab;
+    background-color: red;
+}
+.input::-ms-thumb:active {
+    cursor: grabbing;
+}
+.input::-moz-range-thumb {
+    appearance: none;
+    pointer-events: all;
+    width: 16px;
+    height: 16px;
+    border-radius: 0px;
+    border: 0 none;
+    cursor: grab;
+    background-color: red;
+}
+.input::-moz-range-thumb:active {
+    cursor: grabbing;
+}
+.input::-webkit-slider-thumb {
+    appearance: none;
+    pointer-events: all;
+    width: 16px;
+    height: 16px;
+    border-radius: 0px;
+    border: 0 none;
+    cursor: grab;
+    background-color: red;
+}
+.input::-webkit-slider-thumb:active {
+    cursor: grabbing;
+}
+.rail {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 6px;
+    border-radius: 3px;
+    background: lightgrey;
+}
+.inner-rail {
+    position: absolute;
+    height: 100%;
+    background: #9890cf;
+    opacity: 0.5;
+}
+/*//*/
+.control {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    position: absolute;
+    background: #a69bed;
+    top: 50%;
+    margin-left: calc(16px / -2);
+    transform: translate3d(0, -50%, 0);
+    z-index: 2;
+}
+.filter-page #fs_price_body .line{
+    position: absolute;
+    height: 7px;
+    background: #ff286c;
+    margin-top: 10px;
+    right: 15px;
+    left: 15px;
+}
+
+.filter-page #fs_price_body .line:before{
+    position: absolute;
+    content: '';
+    display: block;
+    height: 15px;
+    width: 15px;
+    background: #ff286c;
+    border-radius: 50%;
+    left: -4px;
+    top: -3px;
+}
+
+.filter-page #fs_price_body .line:after{
+    position: absolute;
+    content: '';
+    display: block;
+    height: 15px;
+    width: 15px;
+    background: #ff286c;
+    border-radius: 50%;
+    right: -4px;
+    top: -3px;
+}
+
+.filter-page #fs_price_body ul{
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.filter-page #fs_price_body ul li{
+    list-style: none;
+    display: inline-block;
+}
+
+.filter-page #fs_price_body ul li:last-child{
+    float: right;
+}
+
+.filter-page #fs_distance_body ul{
+    padding: 0;
+    display: block;
+    margin-top: 15px;
+}
+
+.filter-page #fs_distance_body ul li{
+    list-style: none;
+    margin-bottom: 18px;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.filter-page #fs_distance_body .text-right{
+    float: right;
+    height: 13px;
+    width: 13px;
+    border: 1px solid #999;
+    margin-top: 3px;
+}
+
+.filter-page #fs_distance_body li.active span:first-child{
+    color: #ff286c;
+}
+
+.filter-page #fs_distance_body li.active span:last-child{
+    background: #ff286c;
+    color: #fff;
+    border: 1px solid #ff286c;
+    font-size: 10px;
+    line-height: 100%;
+    text-align: center;
+}
+
+.filter-page #fs_time_body ul{
+    padding: 0;
+    display: block;
+    margin-top: 15px;
+}
+
+.filter-page #fs_time_body ul li{
+    list-style: none;
+    margin-bottom: 18px;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.filter-page #fs_time_body .text-right{
+    float: right;
+    height: 13px;
+    width: 13px;
+    border: 1px solid #999;
+    margin-top: 3px;
+}
+
+.filter-page #fs_time_body li.active span:first-child{
+    color: #ff286c;
+}
+
+.filter-page #fs_time_body li.active span:last-child{
+    background: #ff286c;
+    color: #fff;
+    border: 1px solid #ff286c;
+    line-height: 100%;
+    text-align: center;
+    font-size: 10px;
+}
+
+.filter-page #fs_rating ul{
+    padding: 0;
+    display: block;
+    margin-top: 15px;
+}
+
+.filter-page #fs_rating ul li{
+    list-style: none;
+    margin-bottom: 18px;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.filter-page #fs_rating .text-right{
+    float: right;
+    height: 13px;
+    width: 13px;
+    border: 1px solid #999;
+    margin-top: 3px;
+}
+
+.filter-page #fs_rating i{
+    color: #eee;
+}
+
+.filter-page #fs_rating i.dark{
+    color: #000;
+}
+
+.filter-page #fs_rating{
+    border: none !important;
+}
+.sel_country{
+    width: 100%;
+    padding: 6px 0 ;
+    border: 1px solid lightgray;
+}
+.sel_country:focus-visible{
+    border: 1px solid lightgray;
+    outline: none;
+}

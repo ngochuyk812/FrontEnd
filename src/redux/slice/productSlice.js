@@ -34,14 +34,17 @@ export const changeQuantity = createAsyncThunk(
     };
   }
 );
-const productSlice = createSlice({
+const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
+    filterProducts: (state, action) => {
+      state.productsFilter = action.payload;
+    },
     changeStatus: (state, action) => {
       const tmp = action.payload;
       state.status = "change status";
-      state.listProducts.forEach((item) => {
+      state.products.forEach((item) => {
         if (item.id == tmp.id) {
           if (action.payload.type == 1) {
             item.status = true;
@@ -92,5 +95,6 @@ const getListProductIntoLs = () => {
   return JSON.parse(localStorage.getItem("listProducts"));
 };
 
-export const { changeStatus } = productSlice.actions;
-export default productSlice.reducer;
+export const { filterProducts, changeStatus } = productsSlice.actions;
+
+export default productsSlice.reducer;

@@ -17,8 +17,6 @@
         }
     }
 
-
-
     img {
         width: 10%;
         height: auto;
@@ -34,7 +32,6 @@
         font-size: 15px;
         text-align: center;
         color: #21b7d1;
-
     }
 
     .cart-item-count {
@@ -57,22 +54,18 @@
             cursor: pointer;
             animation: opacity 0.4s both;
         }
-
     }
 
     .item-count {
         width: 40px;
-        text-align: center
+        text-align: center;
     }
-
 }
 
 .cart-item-del {
     cursor: pointer;
     color: #21b7d1;
-
 }
-
 
 @keyframes opacity {
     0% {
@@ -90,7 +83,7 @@
 
         p,
         span {
-            font-size: 8px !important
+            font-size: 8px !important;
         }
 
         .item-count {
@@ -100,7 +93,6 @@
         .item-count-decrease,
         .item-count-increase {
             padding: 0px 2px !important;
-
         }
     }
 
@@ -159,7 +151,7 @@
 
         p,
         span {
-            font-size: 10px !important
+            font-size: 10px !important;
         }
 
         .cart-product {
