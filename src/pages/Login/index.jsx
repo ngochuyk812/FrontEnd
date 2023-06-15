@@ -82,7 +82,7 @@ function Login(props) {
           </div>
           <div className="form-group d-md-flex " style={{margin: '15px 0 ', display:'flex', justifyContent:'space-between', flexWrap:'wrap'}}>
             <div className="w-50 text-left">
-              <label className="checkbox-wrap checkbox-primary mb-0">Remember Me
+              <label className="checkbox-wrap checkbox-primary mb-0" >Remember Me
                 <input type="checkbox" defaultChecked />
                 <span className="checkmark" />
               </label>
