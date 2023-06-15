@@ -4,13 +4,13 @@ import { MDBFooter, MDBContainer, MDBRow, MDBCol, MDBIcon } from 'mdb-react-ui-k
 
 function index(props) {
     return (
-        <MDBFooter bgColor='light' className='text-center text-lg-start text-muted'>
-        <section className='d-flex justify-content-center justify-content-lg-between p-4 border-bottom'>
-          <div className='me-5 d-none d-lg-block'>
+        <MDBFooter bgColor='light' className='text-center text-lg-start text-muted' style={{backgroundColor:'white'}}>
+        <section className='d-flex justify-content-center justify-content-lg-between p-4 border-bottom' >
+          <div className='me-5 d-none d-lg-block' style={{backgroundColor:'white'}}>
             <span>Kết nối với chúng tôi:</span>
           </div>
   
-          <div>
+          <div >
             <a href='' className='me-4 text-reset'>
               <MDBIcon fab icon="facebook-f" />
             </a>
@@ -32,9 +32,9 @@ function index(props) {
           </div>
         </section>
   
-        <section className=''>
-          <MDBContainer className='text-center text-md-start mt-5'>
-            <MDBRow className='mt-3'>
+        <section className='' >
+          <MDBContainer className='text-center text-md-start mt-5' style={{backgroundColor:'white'}}>
+            <MDBRow className='mt-3' >
               <MDBCol md="3" lg="4" xl="3" className='mx-auto mb-4'>
                 <h6 className='text-uppercase fw-bold mb-4'>
                   <MDBIcon icon="gem" className="me-3" />
