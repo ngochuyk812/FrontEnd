@@ -1,7 +1,7 @@
 import './style.css'
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {filterProducts} from "../../redux/slice/productSlice";
+import {filterProducts} from "../../../../redux/slice/productSlice";
 import {getCountry, getColors, filter} from "./javascript";
 
 export const Filter = ({setSearch, search})=>{

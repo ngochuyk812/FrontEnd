@@ -3,8 +3,8 @@ import './style.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import {getAllProduct} from "../../redux/slice/productSlice";
 import Loading from "../../components/Loading/Loading";
-import {Product} from "../../components/Product/Product";
-import {Filter} from "../../components/Filter/Filter";
+import {Product} from "./component/Product";
+import {Filter} from "./component/Filter";
 
 Products.propTypes = {
     
@@ -67,13 +67,13 @@ function Products(props) {
                 <Filter  search = {search}  ></Filter>
             </div>
 
-            <div className='main_products container'>
+            <div style={{padding:0}} className='main_products container'>
 
                 <div className='filter_products'>
                     <Filter  search = {search}  ></Filter>
                 </div>
 
-                <div style={{  border: '1px solid lightgray',
+                <div className='content_products' style={{  border: '1px solid lightgray',
                     padding: 15, width: '100%'}}>
                     <div className="" style={{marginBottom:'10px', borderBottom:'1px solid lightgray', paddingBottom:'10px'}}>
 
