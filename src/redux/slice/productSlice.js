@@ -44,7 +44,7 @@ const productsSlice = createSlice({
     changeStatus: (state, action) => {
       const tmp = action.payload;
       state.status = "change status";
-      state.products.forEach((item) => {
+      state.listProducts.forEach((item) => {
         if (item.id == tmp.id) {
           if (action.payload.type == 1) {
             item.status = true;
