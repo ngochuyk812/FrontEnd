@@ -12,12 +12,14 @@ import InfoUser from "../pages/Profile";
 import Layout from "../components/layout";
 import Setting from "../pages/Setting";
 
+
 const publicRoutes = [
   { path: "/", component: Home },
   { path: "/products", component: Products },
   { path: "/contact", component: Contact },
   { path: "/detail", component: Detail },
   { path: "/forgotPassword", component: ForgotPassword },
+
   { path: "/login", component: Login },
   { path: "/register", component: Register },
 ];
