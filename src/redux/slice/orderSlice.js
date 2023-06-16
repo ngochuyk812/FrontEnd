@@ -5,8 +5,28 @@ const initialState = {
   listOrders: [],
   error: null,
   status: "",
-  linkTo: "/",
+  listOrderByUser:[]
 };
+export const getOrderByUser = createAsyncThunk(
+    "order/orderById",
+    async (id) => {
+      console.log(id)
+      const response = await axios.get("http://localhost:3000/orders?idUser="+id);
+      let order = response.data;
+      let rs = []
+      console.log(order)
+
+      for(const tmp of order){
+        const orerDetail = await axios.get("http://localhost:3000/ordersDetail?idOrder="+tmp.id)
+        let rsDetail = orerDetail.data
+        let itemRs = {...tmp, detail: rsDetail}
+        rs.push(itemRs)
+        console.log(itemRs)
+
+      }
+     return rs
+    }
+);
 export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   let response;
   let response2;
@@ -95,7 +115,22 @@ const orderSlice = createSlice({
         state.status = "failed";
         state.user = null;
         state.error = action.error.message;
-      });
+      })
+        .addCase(getOrderByUser.pending, (state) => {
+          state.status = "loading";
+          state.status = "";
+          state.error = "";
+        })
+        .addCase(getOrderByUser.fulfilled, (state, action) => {
+          console.log(action.payload);
+          state.status = "succeeded";
+          state.listOrderByUser = action.payload;
+          state.error = null;
+        })
+        .addCase(getOrderByUser.rejected, (state, action) => {
+          state.status = "failed";
+          state.error = action.error.message;
+        });
   },
 });
 

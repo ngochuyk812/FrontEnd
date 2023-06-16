@@ -11,7 +11,18 @@ const initialState = {
   status: "",
   linkTo: "/",
 };
+export const updateProfilee = createAsyncThunk('auth/updateProfile', async (user ) => {
+    console.log(initialState.user , "dsdsd")
+    const userFull = await  axios.get("http://localhost:3000/users/" + user.id)
+    let userNew = userFull.data
+    userNew = {id: userNew.id, password: userNew.password, ...user}
+    console.log(userNew)
 
+    const responseCheck = await axios.put('http://localhost:3000/users/'+user.id, userNew);
+    let data =  responseCheck.data
+    delete userNew.password
+    return userNew
+});
 export const login = createAsyncThunk(
   "auth/login",
   async ({ username, password }) => {
@@ -84,11 +95,13 @@ const profileSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         console.log(action);
         if (action.payload.type === 1) {
+            let user = action.payload.user
+            delete user.password
           state.status = "succeeded";
-          state.user = action.payload.user;
+          state.user = user;
           state.error = null;
           console.log(state.user);
-          localStorage.setItem("user", JSON.stringify(action.payload));
+          localStorage.setItem("user", JSON.stringify(user));
         } else {
           state.status = "error";
           state.error = "Tài khoản hoặc mật khẩu không chính xác";
@@ -114,7 +127,26 @@ const profileSlice = createSlice({
         state.status = "failed";
         state.user = null;
         state.error = action.error.message;
-      });
+      })
+        .addCase(updateProfilee.pending, (state) => {
+            state.status = "loading";
+            state.action = "";
+            state.error = "";
+
+        })
+        .addCase(updateProfilee.fulfilled, (state, action) => {
+            let user = action.payload
+            state.user = user
+            localStorage.setItem('user', JSON.stringify(user))
+            state.status = 'succeeded'
+            state.action = 'updateProfile'
+
+        })
+        .addCase(updateProfilee.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+
+        });
   },
 });
 

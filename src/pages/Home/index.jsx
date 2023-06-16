@@ -14,7 +14,7 @@ Index.propTypes = {};
 function Index(props) {
   const step = 3;
   let listProds = useSelector((state) => {
-    return state.product.listProducts;
+    return state.product.products;
   });
   const [state, setState] = useState(2);
   const settings = {

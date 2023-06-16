@@ -1,0 +1,6 @@
+.editUser{
+    transition: all 0.7s ease;
+}
+.editUser input{
+    color: black;
+}

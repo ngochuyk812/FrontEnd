@@ -9,9 +9,11 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@tanstack/react-table": "^8.9.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.6.1",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "cdbreact": "^1.5.14",
@@ -19,7 +21,6 @@
     "immer": "^10.0.1",
     "mdb-react-ui-kit": "^6.1.0",
     "mdbreact": "^5.2.0",
-    "node-sass": "^7.0.3",
     "react": "^18.2.0",
     "react-bootstrap": "^1.6.7",
     "react-dom": "^18.2.0",
@@ -28,19 +29,18 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.7.3",
     "react-slick": "^0.29.0",
+    "react-table": "^7.8.0",
     "redux": "^4.2.1",
     "sass": "^1.62.0",
     "scss": "^0.2.4",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"
   },
-
   "scripts": {
     "start": "set PORT=3006 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-
   },
   "eslintConfig": {
     "extends": [
@@ -65,6 +65,4 @@
     "connect-api-mocker": "^1.10.0",
     "express": "^4.18.2"
   }
-
-
 }
