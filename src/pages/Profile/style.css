@@ -1,0 +1,41 @@
+.main_profile{
+    width: 100%;
+    position: relative;
+}
+.sub_profile{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    overflow: hidden;
+}
+.header_profile{
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    border-bottom: 1px solid lightgray;
+}
+.header_profile >button{
+    padding: 3px 15px;
+    border: 1px solid lightgray;
+    font-weight: 600;
+
+
+}
+.header_profile >button.active{
+    background-color: white;
+    border-bottom: 1px solid white;
+    position: relative;
+
+}
+.header_profile >button.active::before{
+    position: absolute;
+    content: '';
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    height: 2px;
+
+}

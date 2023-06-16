@@ -7,7 +7,11 @@ import ForgotPassword from "../pages/ForgotPassword";
 import Login from "../pages/Login/Login";
 import Orders from "../pages/Orders";
 import Register from "../pages/Register";
-import Profile from "../pages/Profile";
+import Profile from "../components/layout";
+import InfoUser from "../pages/Profile";
+import Layout from "../components/layout";
+import Setting from "../pages/Setting";
+
 const publicRoutes = [
   { path: "/", component: Home },
   { path: "/products", component: Products },
@@ -19,9 +23,11 @@ const publicRoutes = [
 ];
 const authRoutes = [];
 const privateRoutes = [
-  { path: "/checkout", component: Checkout },
-  { path: "/orders", component: Orders },
-  { path: "/profile", component: Profile },
+  { path: "/profile", component:InfoUser, layout: Layout },
+  { path: "/orders", component: Orders, layout: Layout},
+  { path: "/setting", component: Setting, layout: Layout},
+  { path: "/checkout", component: Checkout},
+
 ];
 
 export { publicRoutes, privateRoutes, authRoutes };
