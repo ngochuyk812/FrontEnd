@@ -3,7 +3,9 @@
 
 
 }
-
+.sidebar_left ul{
+    padding: 0;
+}
 .top_sidebar_left{
     border-radius: 15px;
     display: flex;
