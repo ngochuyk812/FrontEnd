@@ -6,6 +6,8 @@ import { colors } from "../../../components/Notify/Notify";
 import { changeQuantity } from "../../../redux/slice/productSlice";
 
 import "./style.scss";
+import {Link} from "react-router-dom";
+import React from "react";
 
 function Item({ product }) {
   const dispatch = useDispatch();

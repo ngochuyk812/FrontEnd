@@ -8,6 +8,7 @@ import "./style.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Item from "./Component";
+import { Link } from "react-router-dom";
 Index.propTypes = {};
 
 function Index(props) {
@@ -64,6 +65,7 @@ function Index(props) {
           <div>SẢN PHẨM MỚI NHẤT</div>
         </Slider>
       </div>
+
       <div className="home-product">
         {listProds.map((item, index) => {
           return (
