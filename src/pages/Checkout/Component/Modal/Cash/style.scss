@@ -1,0 +1,123 @@
+.container-cash {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(99, 86, 86, 0.3);
+
+    .cash-modal {
+        width: 60%;
+        padding: 40px 20px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: white;
+
+        .cash-modal-close {
+            padding: 5px 10px;
+            right: 5px;
+            top: 5px;
+            border-radius: 2px;
+            cursor: pointer;
+            position: absolute;
+            transition: all 0.5s ease;
+
+            &:hover {
+                background-color: #21b7d1;
+                color: white;
+            }
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+
+    }
+
+}
+
+#payment-cash {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    input {
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        outline: none;
+        border: 1px #d9d9d9 solid;
+        animation: all 0.5 ease;
+
+        &:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+        }
+    }
+
+    #payment-sub {
+        font-weight: 800;
+        background-color: #21b7d1;
+        color: white;
+        transition: all 0.3s linear;
+
+        &:hover {
+            opacity: 0.5;
+        }
+
+        &:focus {
+            border: none !important;
+            border-color: none !important;
+            box-shadow: none !important;
+        }
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 1024px) {
+    .cash-modal {
+        h1 {
+            font-size: 25px !important;
+        }
+
+        input {
+            font-size: 15px !important;
+            padding: 5px !important;
+
+        }
+
+        #payment-sub {
+            font-size: 20px !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .cash-modal {
+        h1 {
+            font-size: 20px !important;
+        }
+
+        input {
+            font-size: 10px !important;
+            padding: 2px !important;
+
+        }
+
+        #payment-sub {
+            font-size: 15px !important;
+        }
+    }
+}

@@ -1,61 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
+import { loadProducts } from "../../redux/slice/productSlice";
+import { loadCarts } from "../../redux/slice/cartSlice";
 
 import "./style.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Item from "./Component";
+import { Link } from "react-router-dom";
 Index.propTypes = {};
 
 function Index(props) {
   const step = 3;
-  let listProds = [
-    {
-      id: 1,
-      quantity: 149,
-      name: "Casio MTP-1374L-1AVDF",
-      price: 2900000,
-      images: [
-        "/hinh-anh-dong-ho-casio-mtp-1374l-1avdf-nam-pin-day-da-new-1.jpg",
-        "/dong-ho-casio-mtp-1374l-1avdf-nam-pin-day-da-a-hinh-2.jpg",
-        "/dong-ho-casio-mtp-1374l-1avdf-nam-pin-day-da-a-2-1.jpg",
-      ],
-    },
-    {
-      id: 2,
-      quantity: 89,
-      name: "Casio MTP-1374L-1AVDF",
-      price: 2900000,
-      images: [
-        "/hinh-anh-dong-ho-casio-mtp-1374l-1avdf-nam-pin-day-da-new-1.jpg",
-        "/dong-ho-casio-mtp-1374l-1avdf-nam-pin-day-da-a-hinh-2.jpg",
-        "/dong-ho-casio-mtp-1374l-1avdf-nam-pin-day-da-a-2-1.jpg",
-      ],
-    },
-    {
-      id: 3,
-      quantity: 39,
-      name: "Casio MTP-VT01L-1BUDF",
-      price: 2900000,
-      images: [
-        "/dong-ho-Casio-MTP-VT01L-1BUDF-1.jpg",
-        "/dong-ho-casio-mtp-vt01l-1budf-nam-pin-quartz-day-da-7.jpg",
-        "/dong-ho-casio-mtp-vt01l-1budf-nam-pin-quartz-day-da-10.jpg",
-      ],
-    },
-    {
-      id: 4,
-      quantity: 5,
-      name: "Casio AE-1200WHD-1AVDF",
-      price: 2900000,
-      images: [
-        "/hinh-anh-AE-1200WHD-1AVDF-new-2.jpg",
-        "/AE-1200WHD-1AVDF-1-1.jpg",
-        "/AE-1200WHD-1AVDF-2-1.jpg",
-      ],
-    },
-  ];
+  let listProds = useSelector((state) => {
+    return state.product.listProducts;
+  });
   const [state, setState] = useState(2);
   const settings = {
     dots: true,
@@ -105,15 +65,14 @@ function Index(props) {
           <div>SẢN PHẨM MỚI NHẤT</div>
         </Slider>
       </div>
+
       <div className="home-product">
         {listProds.map((item, index) => {
-          if (item.quantity > 0) {
-            return (
-              index <= state && (
-                <Item status={item.status} key={index} product={item} />
-              )
-            );
-          }
+          return (
+            index <= state && (
+              <Item status={item.status} key={index} product={item} />
+            )
+          );
         })}
       </div>
       <div className="see-all">
