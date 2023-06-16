@@ -1,16 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 
 const initialState = {
-  products: [],
-  productsFilter: [],
+  listProducts: [],
+  error: null,
   status: "",
+  linkTo: "/",
 };
-
-export const getAllProduct = createAsyncThunk("products/getAll", async () => {
+export const loadProducts = createAsyncThunk("auth/products", async () => {
   const response = await axios.get("http://localhost:3000/products");
-  let data = JSON.parse(JSON.stringify(response.data));
+  let data = response.data;
   return data;
 });
 export const changeQuantity = createAsyncThunk(
@@ -45,7 +44,7 @@ const productsSlice = createSlice({
     changeStatus: (state, action) => {
       const tmp = action.payload;
       state.status = "change status";
-      state.products.forEach((item) => {
+      state.listProducts.forEach((item) => {
         if (item.id == tmp.id) {
           if (action.payload.type == 1) {
             item.status = true;
@@ -54,15 +53,18 @@ const productsSlice = createSlice({
           }
         }
       });
-      saveListProductIntoLs(state.products);
+      saveListProductIntoLs(state.listProducts);
     },
   },
+
   extraReducers: (builder) => {
     builder
-      .addCase(getAllProduct.pending, (state) => {
+      .addCase(loadProducts.pending, (state) => {
         state.status = "loading";
+        state.status = "";
+        state.error = "";
       })
-      .addCase(getAllProduct.fulfilled, (state, action) => {
+      .addCase(loadProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
         const listProductLS = getListProductIntoLs();
         if (listProductLS) {
@@ -75,14 +77,17 @@ const productsSlice = createSlice({
           });
         }
         saveListProductIntoLs(action.payload);
-        state.products = action.payload;
-        state.productsFilter = action.payload;
+        state.listProducts = action.payload;
+        state.error = null;
       })
-      .addCase(getAllProduct.rejected, (state, action) => {
+      .addCase(loadProducts.rejected, (state, action) => {
         state.status = "failed";
+        state.user = null;
+        state.error = action.error.message;
       });
   },
 });
+
 const saveListProductIntoLs = (listProducts) => {
   localStorage.setItem("listProducts", JSON.stringify(listProducts));
 };

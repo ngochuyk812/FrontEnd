@@ -16,10 +16,10 @@ const publicRoutes = [
   { path: "/forgotPassword", component: ForgotPassword },
   { path: "/login", component: Login },
   { path: "/register", component: Register },
-  { path: "/checkout", component: Checkout },
 ];
 const authRoutes = [];
 const privateRoutes = [
+  { path: "/checkout", component: Checkout },
   { path: "/orders", component: Orders },
   { path: "/profile", component: Profile },
 ];

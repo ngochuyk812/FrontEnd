@@ -6,6 +6,9 @@
   height: 40vmin;
   pointer-events: none;
 }
+.disable {
+  opacity: 0.5 !important;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -26,6 +29,10 @@
 
 .App-link {
   color: #61dafb;
+}
+.highlight {
+  font-weight: bold;
+  color: #a73340 !important;
 }
 
 @keyframes App-logo-spin {

@@ -4,17 +4,18 @@ import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { Route, BrowserRouter, redirect, Routes } from "react-router-dom";
 import PrivateRoutes from "./components/PrivateRoute/PrivateRoute";
-import { privateRoutes, publicRoutes } from "./routes";
+import { authRoutes, privateRoutes, publicRoutes } from "./routes";
 import { useDispatch, useSelector } from "react-redux";
 import Notify from "./components/Notify/Notify";
-import { getAllProduct } from "./redux/slice/productSlice";
-import { loadCarts } from "./redux/slice/cartSlide";
+import { colors } from "./components/Notify/Notify";
+import { loadProducts } from "../src/redux/slice/productSlice";
+import { loadCarts } from "../src/redux/slice/cartSlice";
 import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllProduct());
+    dispatch(loadProducts());
     dispatch(loadCarts());
   }, []);
   const notify = useSelector((state) => {
@@ -23,7 +24,6 @@ function App() {
   const auth = useSelector((state) => {
     return state.auth;
   });
-  console.log("Account " + auth.user);
   return (
     <BrowserRouter>
       <div>

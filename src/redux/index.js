@@ -4,13 +4,15 @@ import authSlice from "./slice/authSlice";
 import notifySlice from "./slice/notifySlice";
 import registerSlice from "./slice/registerSlice";
 import productSlice from "./slice/productSlice";
-import cartSlide from "./slice/cartSlide";
+import cartSlice from "./slice/cartSlice";
+import orderSlice from "./slice/orderSlice";
 export const store = configureStore({
   reducer: {
     auth: authSlice,
     register: registerSlice,
-    products: productSlice,
     notify: notifySlice,
-    cart: cartSlide,
+    product: productSlice,
+    cart: cartSlice,
+    order: orderSlice,
   },
 });
