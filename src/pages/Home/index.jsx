@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
+import { loadProducts } from "../../redux/slice/productSlice";
+import { loadCarts } from "../../redux/slice/cartSlice";
 
 import "./style.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Item from "./Component";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 Index.propTypes = {};
 
 function Index(props) {
   const step = 3;
   let listProds = useSelector((state) => {
-    return state.products.products;
+    return state.product.listProducts;
   });
   const [state, setState] = useState(2);
   const settings = {
@@ -66,15 +68,11 @@ function Index(props) {
 
       <div className="home-product">
         {listProds.map((item, index) => {
-          if (item.quantity > 0) {
-            return (
-
-              index <= state && (
-                <Item status={item.status} key={index} product={item} />
-
-              )
-            );
-          }
+          return (
+            index <= state && (
+              <Item status={item.status} key={index} product={item} />
+            )
+          );
         })}
       </div>
       <div className="see-all">

@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { delItemCarts, addItemIntoCart } from "../../../redux/slice/cartSlide";
+import { delItemCarts, addItemIntoCart } from "../../../redux/slice/cartSlice";
 import { changeStatus } from "../../../redux/slice/productSlice";
 import { addNotify } from "../../../redux/slice/notifySlice";
 import { colors } from "../../../components/Notify/Notify";
+import { changeQuantity } from "../../../redux/slice/productSlice";
 
 import "./style.scss";
 import {Link} from "react-router-dom";
@@ -10,17 +11,30 @@ import React from "react";
 
 function Item({ product }) {
   const dispatch = useDispatch();
+  console.log(product);
   const status = useSelector((state) => state.cart.error);
   let item = useSelector((state) => state.cart.listCarts).filter((item) => {
     return item.idProduct == product.id;
   });
+  const numberOfProducts = () => {
+    for (let index = 0; index < product.quantity_by_featured.length; index++) {
+      if (product.quantity_by_featured[index].quantity > 0) {
+        return product.quantity_by_featured[index].color;
+      }
+    }
+    return null;
+  };
+  const check = numberOfProducts();
+  console.log(check);
   const handelAddCart = () => {
-    if (product.quantity > 0) {
+    if (numberOfProducts() != null) {
       dispatch(
         addItemIntoCart({
           ...product,
+          color: numberOfProducts(),
         })
       );
+    } else {
       dispatch(
         addNotify({
           title: "Thất bại",
@@ -28,7 +42,6 @@ function Item({ product }) {
           color: colors.error,
         })
       );
-    } else {
     }
     handleAfterAddItemCarts();
   };
@@ -79,22 +92,23 @@ function Item({ product }) {
     }
   };
   return (
-    <div>
-
-    < Link to={'/detail'} className="home-item active" href=""/>
-
-
-      <img
-        className="item-img"
-        src={"http://localhost:3000/" + product.images[0]}
-        alt=""
-      />
+    <div className="home-item" href="">
+      <div className="item-img">
+        <img className="item-img" src={product.images[0]} alt="" />
+      </div>
       <div className="item-content">
-        <p className="item-title">{product.name}</p>
-        <p className="item-price">{product.price}</p>
+        <p className="item-title ">{product.title}</p>
+        <p className="item-price highlight">
+          {numberOfProducts() != null ? "Còn hàng" : "Hết hàng"}
+        </p>
+        <p className="item-price highlight">{product.price}$</p>
       </div>
       {!product.status ? (
-        <button onClick={handelAddCart} className="item-addCart">
+        <button
+          className={"item-addCart" + (check == null ? " disable" : "")}
+          disabled={check == null}
+          onClick={handelAddCart}
+        >
           ADD TO CART
         </button>
       ) : (

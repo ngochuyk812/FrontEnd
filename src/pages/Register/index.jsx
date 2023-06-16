@@ -69,7 +69,7 @@ function Index(props) {
     },[registerState])
     return (
        <div className='main_login '>
-        {register.status === 'loading'?<Loading/>:""}
+        {registerState === 'loading'?<Loading/>:""}
         <div className='login_form '>
             <div className='backgroud'>
 
