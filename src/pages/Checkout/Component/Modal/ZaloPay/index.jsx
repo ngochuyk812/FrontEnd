@@ -18,6 +18,7 @@ function ZaloPay({ idUser, sumPrice }) {
       return item.status;
     }
   );
+  const user = useSelector((state) => state.auth.user.user);
   const listProduct = useSelector((state) => state.product.listProducts);
   const [isClose, setIsClose] = useState(true);
   const [hidden, setHidden] = useState(false);
@@ -63,6 +64,7 @@ function ZaloPay({ idUser, sumPrice }) {
         sumPrice,
         idUser,
         type: 1,
+        address: user.address,
       })
     );
     listCarts.forEach(async (tmp) => {

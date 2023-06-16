@@ -49,6 +49,7 @@ function Cash({ idUser, sumPrice }) {
           quantity: item.quantity,
           price: tmp.price * item.quantity,
           name: tmp.title,
+          color: item.color,
         });
       }
     });

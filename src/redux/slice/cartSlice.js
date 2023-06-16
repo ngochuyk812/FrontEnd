@@ -127,7 +127,6 @@ const cartSlice = createSlice({
         console.log([...state.listCarts, tmp]);
         state.status = "add item into cart";
         state.error = null;
-        console.log(123);
         console.log(state.listCarts);
         saveListCartIntoLs(state.listCarts);
       })

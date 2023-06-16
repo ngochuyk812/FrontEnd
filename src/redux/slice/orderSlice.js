@@ -40,6 +40,7 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
       idOrder: response.id,
       idProduct: e.id,
       nameProduct: e.name,
+      color: e.color,
       quantity: e.quantity,
       price: e.price,
     });
@@ -62,6 +63,7 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
       cardNumber: item.cardNumber,
       expirationDate: item.expirationDate,
       cvv: item.cvv,
+      address: item.address,
     });
   }
 

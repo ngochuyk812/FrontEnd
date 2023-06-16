@@ -3,11 +3,12 @@ import "./style.scss";
 import { Link } from "react-router-dom";
 import logo from "../../../images/logo.png";
 import MiniCart from "../../MiniCart/MiniCart";
+import { useSelector } from "react-redux";
 
 function Index(props) {
   const [active, setActive] = useState(window.location.pathname);
   const [openNav, setOpenNav] = useState(false);
-
+  const listCarts = useSelector((state) => state.cart.listCarts);
   const handleNav = (elm) => {
     setActive(elm);
     setOpenNav(false);
@@ -52,7 +53,7 @@ function Index(props) {
           <Link className="cart_icon">
             <Link to={"/checkout"} className="cart_icon">
               <i className="fa fa-shopping-cart"></i>
-              <span className="quantity_cart">2</span>
+              <span className="quantity_cart">{listCarts.length}</span>
             </Link>
             <div className="minicart_header">
               <MiniCart></MiniCart>
