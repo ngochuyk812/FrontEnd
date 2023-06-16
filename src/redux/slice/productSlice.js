@@ -2,10 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  listProducts: [],
+  products: [],
+  productsFilter: [],
   error: null,
   status: "",
   linkTo: "/",
+
 };
 export const loadProducts = createAsyncThunk("auth/products", async () => {
   const response = await axios.get("http://localhost:3000/products");
@@ -44,7 +46,7 @@ const productsSlice = createSlice({
     changeStatus: (state, action) => {
       const tmp = action.payload;
       state.status = "change status";
-      state.listProducts.forEach((item) => {
+      state.products.forEach((item) => {
         if (item.id == tmp.id) {
           if (action.payload.type == 1) {
             item.status = true;
@@ -53,7 +55,7 @@ const productsSlice = createSlice({
           }
         }
       });
-      saveListProductIntoLs(state.listProducts);
+      saveListProductIntoLs(state.products);
     },
   },
 
@@ -77,7 +79,9 @@ const productsSlice = createSlice({
           });
         }
         saveListProductIntoLs(action.payload);
-        state.listProducts = action.payload;
+        state.products = action.payload;
+        state.productsFilter = action.payload;
+        console.log(state.products)
         state.error = null;
       })
       .addCase(loadProducts.rejected, (state, action) => {
