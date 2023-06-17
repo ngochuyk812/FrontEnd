@@ -4,11 +4,9 @@ import Checkout from "../pages/Checkout";
 import Contact from "../pages/Contact";
 import Detail from "../pages/Detail";
 import ForgotPassword from "../pages/ForgotPassword";
-import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import Login from "../pages/Login/Login";
 import Orders from "../pages/Orders";
 import Register from "../pages/Register";
-import Profile from "../components/layout";
 import InfoUser from "../pages/Profile";
 import Layout from "../components/layout";
 import Setting from "../pages/Setting";
@@ -20,7 +18,6 @@ const publicRoutes = [
   { path: "/contact", component: Contact },
   { path: "/detail/:id", component: Detail },
   { path: "/forgotPassword", component: ForgotPassword },
-  {path: "/resetPassword",component: ResetPassword},
   { path: "/login", component: Login },
   { path: "/register", component: Register },
 ];

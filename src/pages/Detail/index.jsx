@@ -64,7 +64,7 @@ function Index(props) {
     }
     const getInfo = ()=>{
         let rs= []
-        let obj =  product.product_details
+       let obj =  product.product_details
         for (let prop in obj) {
             console.log(prop + ': ' + obj[prop]);
             if(prop.includes("fabrikant")){

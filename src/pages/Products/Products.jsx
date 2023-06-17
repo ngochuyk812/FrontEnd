@@ -3,8 +3,8 @@ import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { loadProducts } from "../../redux/slice/productSlice";
 import Loading from "../../components/Loading/Loading";
-import { Product } from "../Orders/components/Product/Product";
-import { Filter } from "../Orders/components/Filter/Filter";
+import { Product } from "./components/Product/Product";
+import { Filter } from "./components/Filter/Filter";
 
 Products.propTypes = {};
 
@@ -17,13 +17,7 @@ function Products(props) {
 
   const [pageActive, setPageActive] = useState(0);
   const [productActive, setProductActive] = useState([]);
-  const list_gall = [
-    "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/04/apple-watch-nen-mua-loai-nao-tot-7.jpg",
-    "https://cdn.tgdd.vn/Files/2021/10/08/1388854/applewatchs7_2_1280x720-800-resize.jpg",
-    "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/apple-watch-update-lead-1662748036.jpg",
-    "https://www.xtmobile.vn/vnt_upload/news/11_2022/30/apple-watch-series-8-vs-watch-se-2022-avatar.jpg",
-    "https://t2.tudocdn.net/638657?w=660",
-  ];
+
   const dispatch = useDispatch();
   const onMouseEnterHandler = (elm) => {
     elm.target.parentNode.querySelectorAll(".item_galleries").forEach((tmp) => {
