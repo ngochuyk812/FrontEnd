@@ -18,7 +18,7 @@ function Index() {
     return state.cart.listCarts;
   });
   let listProducts = useSelector((state) => {
-    return state.product.listProducts;
+    return state.product.products;
   });
   const [check, setCheck] = useState(false);
   const [modal, setModal] = useState(null);
