@@ -18,7 +18,7 @@ function Cash({ idUser, sumPrice }) {
       return item.status;
     }
   );
-  const listProduct = useSelector((state) => state.product.listProducts);
+  const listProduct = useSelector((state) => state.product.products);
   const status = useSelector((state) => state.order.error);
   const [isClose, setIsClose] = useState(true);
   let user = useSelector((state) => {

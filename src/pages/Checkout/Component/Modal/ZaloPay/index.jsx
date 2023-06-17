@@ -19,7 +19,7 @@ function ZaloPay({ idUser, sumPrice }) {
     }
   );
   const user = useSelector((state) => state.auth.user);
-  const listProduct = useSelector((state) => state.product.listProducts);
+  const listProduct = useSelector((state) => state.product.products);
   const [isClose, setIsClose] = useState(true);
   const [hidden, setHidden] = useState(false);
   const [accountName, setAccountName] = useState("");

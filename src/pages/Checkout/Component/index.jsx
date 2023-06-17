@@ -21,7 +21,7 @@ Item.propTypes = {};
 
 function Item({ item }) {
   const dispatch = useDispatch();
-  const listProducts = useSelector((state) => state.product.listProducts);
+  const listProducts = useSelector((state) => state.product.products);
   const listCarts = useSelector((state) => state.cart.listCarts);
   const [isActive, setIsActive] = useState(item.status);
   useEffect(() => {
