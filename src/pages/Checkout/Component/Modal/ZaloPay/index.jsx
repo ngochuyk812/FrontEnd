@@ -11,7 +11,7 @@ import { changeStatus } from "../../../../../redux/slice/productSlice";
 
 ZaloPay.propTypes = {};
 
-function ZaloPay({ idUser, sumPrice }) {
+function ZaloPay({ idUser, sumPrice, callback }) {
   const dispatch = useDispatch();
   const listCarts = useSelector((state) => state.cart.listCarts).filter(
     (item) => {
@@ -99,6 +99,7 @@ function ZaloPay({ idUser, sumPrice }) {
           color: colors.success,
         })
       );
+      callback(true);
       setIsClose(false);
     }
   };

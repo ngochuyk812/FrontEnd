@@ -1,0 +1,44 @@
+.success-message {
+  color: #4caf50;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.order-details {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+.address-details i {
+  font-size: 16px;
+}
+
+.fa-check-circle {
+  color: #4caf50;
+  font-size: 80px;
+}
+
+.tracking-number {
+}
+.OrderStatus_C {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1000;
+}
+.c_wrapper {
+  padding: 20px;
+  max-width: 600px;
+  border-radius: 10px;
+  background-color: white;
+}
+.modalOrder:hover {
+  background-color: #21b7d1;
+  color: white;
+}

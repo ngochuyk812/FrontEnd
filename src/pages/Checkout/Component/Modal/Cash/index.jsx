@@ -11,7 +11,7 @@ import { changeStatus } from "../../../../../redux/slice/productSlice";
 
 Cash.propTypes = {};
 
-function Cash({ idUser, sumPrice }) {
+function Cash({ idUser, sumPrice, callback }) {
   const dispatch = useDispatch();
   const listCarts = useSelector((state) => state.cart.listCarts).filter(
     (item) => {
@@ -55,6 +55,7 @@ function Cash({ idUser, sumPrice }) {
     });
     return product;
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
@@ -99,6 +100,7 @@ function Cash({ idUser, sumPrice }) {
           color: colors.success,
         })
       );
+      callback(true);
       setIsClose(false);
     }
   };
