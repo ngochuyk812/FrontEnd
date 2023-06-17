@@ -5,7 +5,6 @@ import Select from "react-select";
 import { addNotify } from "../../../redux/slice/notifySlice";
 import { changeStatus } from "../../../redux/slice/productSlice";
 import { colors } from "../../../components/Notify/Notify";
-import { changeQuantity } from "../../../redux/slice/productSlice";
 import {
   changeColorItemCarts,
   changeStatusCart,
@@ -23,6 +22,7 @@ Item.propTypes = {};
 function Item({ item }) {
   const dispatch = useDispatch();
   const listProducts = useSelector((state) => state.product.listProducts);
+  const listCarts = useSelector((state) => state.cart.listCarts);
   const [isActive, setIsActive] = useState(item.status);
   useEffect(() => {
     setIsActive(item.status);
@@ -39,7 +39,6 @@ function Item({ item }) {
       });
     }
   });
-  console.log(options);
   const [selectedOption, setSelectedOption] = useState([options[0]]);
   product = product[0];
   const handleDelItem = (item) => {
@@ -63,14 +62,6 @@ function Item({ item }) {
           type: 0,
         })
       );
-      // dispatch(
-      //   changeQuantity({
-      //     ...product,
-      //     type: 0,
-      //     //123
-      //     count: item.quantity,
-      //   })
-      // );
       dispatch(
         addNotify({
           title: "Thành công",
@@ -85,8 +76,15 @@ function Item({ item }) {
       (tmp) => tmp.color === color
     );
     if (matchingProduct) {
-      return matchingProduct.quantity;
+      for (const tmp of listCarts) {
+        if (tmp.idProduct === product.id) {
+          if (tmp.quantity >= matchingProduct.quantity) {
+            return false;
+          }
+        }
+      }
     }
+    return true;
   };
   const handleChangeQuantity = (item, type) => {
     if (!type) {
@@ -98,7 +96,7 @@ function Item({ item }) {
       );
     } else {
       const quantity = getQuantityProductByColor(item.color);
-      if (quantity > 0) {
+      if (quantity) {
         dispatch(
           changeQuantityItemCarts({
             ...item,
@@ -109,28 +107,12 @@ function Item({ item }) {
         dispatch(
           addNotify({
             title: "Thất bại",
-            content: "Số lượng sản phẩm đã bé hơn 0",
+            content: "Số lượng đã quá giới hạn",
             color: colors.error,
           })
         );
       }
     }
-
-    // if (type) {
-    //   changeQuantity({
-    //     ...product,
-    //     type: 1,
-    //     //123
-    //     count: 1,
-    //   });
-    // } else {
-    //   changeQuantity({
-    //     ...product,
-    //     type: 0,
-    //     //123
-    //     count: 1,
-    //   });
-    // }
   };
   const handelIsActive = () => {
     setIsActive(!isActive);
@@ -180,7 +162,9 @@ function Item({ item }) {
       </p>
       <div className="cart-item-count">
         <p
-          onClick={() => handleChangeQuantity(item, false)}
+          onClick={() =>
+            item.quantity !== 0 && handleChangeQuantity(item, false)
+          }
           className="item-count-decrease"
         >
           <i class="fa-sharp fa-solid fa-minus"></i>
