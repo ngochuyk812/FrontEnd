@@ -3,15 +3,15 @@ import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { loadProducts } from "../../redux/slice/productSlice";
 import Loading from "../../components/Loading/Loading";
-import { Product } from "../../components/Product/Product";
-import { Filter } from "../../components/Filter/Filter";
+import { Product } from "../Orders/components/Product/Product";
+import { Filter } from "../Orders/components/Filter/Filter";
 
 Products.propTypes = {};
 
 function Products(props) {
   const PAGE_LIMIT = 9;
-  const status = useSelector((state) => state.products.status);
-  const products = useSelector((state) => state.products.productsFilter);
+  const status = useSelector((state) => state.product.status);
+  const products = useSelector((state) => state.product.productsFilter);
   const [numberPage, setNumberPage] = useState(1);
   const [search, setSearch] = useState("");
 

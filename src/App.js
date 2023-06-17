@@ -48,6 +48,16 @@ function App() {
           })}
           {privateRoutes.map((tmp) => {
             const Page = tmp.component;
+            if(tmp.layout){
+              let Layout = tmp.layout
+              return (
+                  <Route
+                      path={tmp.path}
+                      element={<PrivateRoutes path={tmp.path} Page={<Layout page = {Page}/>} />}
+                  />
+              );
+
+            }else
             return (
               <Route
                 path={tmp.path}

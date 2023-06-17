@@ -1,0 +1,14 @@
+.showUser{
+    transition: all 0.7s ease;
+}
+.text-center{
+    text-align: center;
+}
+.bold{
+    font-weight: 600;
+    color: black;
+    text-transform: uppercase;
+}
+.container{
+    background-color: white;
+}

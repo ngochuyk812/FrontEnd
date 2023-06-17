@@ -109,7 +109,7 @@ function Index(props) {
           <div className="form-group d-md-flex " style={{margin: '15px 0 '}}>
             
             <div className="text-md-right forgot" >
-              <a href="#">Forgot Password</a>
+                <Link to={"/forgotpassword"} href="#">Forgot Password</Link>
             </div>
           </div>
         </form>
