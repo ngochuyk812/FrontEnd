@@ -88,7 +88,7 @@ const profileSlice = createSlice({
           state.user = action.payload.user;
           state.error = null;
           console.log(state.user);
-          localStorage.setItem("user", JSON.stringify(action.payload));
+          localStorage.setItem("user", JSON.stringify(action.payload.user));
         } else {
           state.status = "error";
           state.error = "Tài khoản hoặc mật khẩu không chính xác";

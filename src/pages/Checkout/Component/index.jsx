@@ -5,7 +5,6 @@ import Select from "react-select";
 import { addNotify } from "../../../redux/slice/notifySlice";
 import { changeStatus } from "../../../redux/slice/productSlice";
 import { colors } from "../../../components/Notify/Notify";
-import { changeQuantity } from "../../../redux/slice/productSlice";
 import {
   changeColorItemCarts,
   changeStatusCart,
@@ -63,14 +62,6 @@ function Item({ item }) {
           type: 0,
         })
       );
-      // dispatch(
-      //   changeQuantity({
-      //     ...product,
-      //     type: 0,
-      //     //123
-      //     count: item.quantity,
-      //   })
-      // );
       dispatch(
         addNotify({
           title: "Thành công",

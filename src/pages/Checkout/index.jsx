@@ -12,7 +12,7 @@ import zalopay from "../../images/zalopay.png";
 Index.propTypes = {};
 let choose = null;
 function Index() {
-  const user = useSelector((state) => state.auth.user.user);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   let listCarts = useSelector((state) => {
     return state.cart.listCarts;

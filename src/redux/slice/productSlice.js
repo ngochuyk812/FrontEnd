@@ -12,28 +12,37 @@ export const loadProducts = createAsyncThunk("auth/products", async () => {
   let data = response.data;
   return data;
 });
-export const changeQuantity = createAsyncThunk(
-  "auth/changeQuantity",
-  async (item) => {
-    let quantity;
-    if (item.type == 0) {
-      quantity = item.quantity + item.count;
-    } else {
-      quantity = item.quantity - item.count;
-    }
-    const response = await axios.patch(
-      `http://localhost:3000/products/${item.id}`,
-      {
-        quantity,
-      }
-    );
-    let data = response.data;
-    return {
-      id: item.id,
-      quantity: quantity,
-    };
-  }
-);
+// const quantityProduct = (idProduct, color) => {
+//   initialState.listProducts.map((item) => {
+//     item.quantity_by_featured.map((tmp) => {
+//       if (item.id === idProduct && tmp.color === color) {
+//         return tmp.quantity;
+//       }
+//     });
+//   });
+//   return 0;
+// };
+// export const changeQuantity = createAsyncThunk(
+//   "auth/changeQuantity",
+//   async (item) => {
+//     const arr = [];
+//     const infoProduct = item.infoProduct.map((e) => {
+//       const count = quantityProduct(item.idProduct, item.color);
+//       arr.push({
+//         idP: e.idProduct,
+//         color: e.color,
+//         quantity: count - e.quantity,
+//       });
+//       return axios.patch(`http://localhost:3000/product/${e.idProduct}`, {
+//         quantity: count - e.quantity,
+//       });
+//     });
+
+//     await Promise.all(infoProduct);
+//     console.log(arr);
+//     return arr;
+//   }
+// );
 const productsSlice = createSlice({
   name: "products",
   initialState,
@@ -85,6 +94,21 @@ const productsSlice = createSlice({
         state.user = null;
         state.error = action.error.message;
       });
+    // .addCase(changeQuantity.pending, (state) => {
+    //   state.status = "loading";
+    //   state.status = "";
+    //   state.error = "";
+    // })
+    // .addCase(changeQuantity.fulfilled, (state, action) => {
+    //   state.status = "succeeded";
+    //   state.listProducts = action.payload;
+    //   state.error = null;
+    // })
+    // .addCase(changeQuantity.rejected, (state, action) => {
+    //   state.status = "failed";
+    //   state.user = null;
+    //   state.error = action.error.message;
+    // });
   },
 });
 

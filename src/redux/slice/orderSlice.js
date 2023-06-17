@@ -7,6 +7,20 @@ const initialState = {
   status: "",
   linkTo: "/",
 };
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Function to generate a random delivery date
+function getRandomDeliveryDate() {
+  var currentDate = new Date(); // Get the current date
+  var deliveryDays = getRandomNumber(1, 10); // Generate a random number of days for delivery
+  var deliveryDate = new Date(
+    currentDate.getTime() + deliveryDays * 24 * 60 * 60 * 1000
+  ); // Add the random number of days to the current date
+
+  return deliveryDate;
+}
 export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   let response;
   let response2;
@@ -25,13 +39,13 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   }
   const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   const infoProduct = item.infoProduct;
-  console.log(infoProduct);
 
   const firstResponse = await axios.post("http://localhost:3000/orders", {
     idUser: item.idUser,
     totalAmount: item.totalAmount,
     orderDate: formattedDateTime,
     note: note,
+    deliveryDate: getRandomDeliveryDate(),
   });
   response = firstResponse.data;
 

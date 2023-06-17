@@ -8,8 +8,12 @@ const initialState = {
   status: "",
   linkTo: "/",
 };
-export const loadCarts = createAsyncThunk("auth/orders", async () => {
-  const response = await axios.get("http://localhost:3000/carts");
+export const loadCarts = createAsyncThunk("auth/orders", async (idUser) => {
+  const response = await axios.get("http://localhost:3000/carts", {
+    params: {
+      idUser: idUser,
+    },
+  });
   let data = response.data;
   return data;
 });
@@ -20,6 +24,7 @@ export const addItemIntoCart = createAsyncThunk(
       idProduct: item.id,
       color: item.color,
       quantity: 1,
+      idUser: item.idUser,
     });
     let data = response.data;
     return {

@@ -7,23 +7,27 @@ import PrivateRoutes from "./components/PrivateRoute/PrivateRoute";
 import { authRoutes, privateRoutes, publicRoutes } from "./routes";
 import { useDispatch, useSelector } from "react-redux";
 import Notify from "./components/Notify/Notify";
-import { colors } from "./components/Notify/Notify";
 import { loadProducts } from "../src/redux/slice/productSlice";
 import { loadCarts } from "../src/redux/slice/cartSlice";
 import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadProducts());
-    dispatch(loadCarts());
-  }, []);
   const notify = useSelector((state) => {
     return state.notify;
   });
-  const auth = useSelector((state) => {
-    return state.auth;
+  const user = useSelector((state) => {
+    return state.auth.user;
   });
+  useEffect(() => {
+    dispatch(loadProducts());
+  }, []);
+  useEffect(() => {
+    if (user) {
+      dispatch(loadCarts(user.id));
+    }
+  }, [user]);
+
   return (
     <BrowserRouter>
       <div>

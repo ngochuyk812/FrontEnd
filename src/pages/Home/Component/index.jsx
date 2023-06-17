@@ -6,7 +6,7 @@ import { colors } from "../../../components/Notify/Notify";
 import { changeQuantity } from "../../../redux/slice/productSlice";
 
 import "./style.scss";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import React from "react";
 
 function Item({ product }) {
@@ -16,6 +16,8 @@ function Item({ product }) {
   let item = useSelector((state) => state.cart.listCarts).filter((item) => {
     return item.idProduct == product.id;
   });
+  let user = useSelector((state) => state.auth.user);
+
   const numberOfProducts = () => {
     for (let index = 0; index < product.quantity_by_featured.length; index++) {
       if (product.quantity_by_featured[index].quantity > 0) {
@@ -24,30 +26,51 @@ function Item({ product }) {
     }
     return null;
   };
+
   const check = numberOfProducts();
-  console.log(check);
   const handelAddCart = () => {
-    if (numberOfProducts() != null) {
-      dispatch(
-        addItemIntoCart({
-          ...product,
-          color: numberOfProducts(),
-        })
-      );
+    if (user != null) {
+      if (numberOfProducts() != null) {
+        dispatch(
+          addItemIntoCart({
+            ...product,
+            color: numberOfProducts(),
+            idUser: user.id,
+          })
+        );
+      } else {
+        dispatch(
+          addNotify({
+            title: "Thất bại",
+            content: "Sản phẩm đã hết hàng",
+            color: colors.error,
+          })
+        );
+      }
+      handleAfterAddItemCarts();
     } else {
       dispatch(
         addNotify({
           title: "Thất bại",
-          content: "Sản phẩm đã hết hàng",
+          content: "Vui lòng đăng nhập!",
           color: colors.error,
         })
       );
     }
-    handleAfterAddItemCarts();
   };
   const handelRemoveCart = () => {
-    dispatch(delItemCarts(item[0]));
-    handleAfterDelItemCarts();
+    if (user !== null) {
+      dispatch(delItemCarts(item[0]));
+      handleAfterDelItemCarts();
+    } else {
+      dispatch(
+        addNotify({
+          title: "Thất bại",
+          content: "Vui lòng đăng nhập!",
+          color: colors.error,
+        })
+      );
+    }
   };
   const handleAfterAddItemCarts = async () => {
     if (status !== null) {

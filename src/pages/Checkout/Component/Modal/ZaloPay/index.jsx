@@ -18,7 +18,7 @@ function ZaloPay({ idUser, sumPrice }) {
       return item.status;
     }
   );
-  const user = useSelector((state) => state.auth.user.user);
+  const user = useSelector((state) => state.auth.user);
   const listProduct = useSelector((state) => state.product.listProducts);
   const [isClose, setIsClose] = useState(true);
   const [hidden, setHidden] = useState(false);
@@ -46,6 +46,7 @@ function ZaloPay({ idUser, sumPrice }) {
           quantity: item.quantity,
           price: tmp.price * item.quantity,
           name: tmp.title,
+          color: item.color,
         });
       }
     });
@@ -67,6 +68,7 @@ function ZaloPay({ idUser, sumPrice }) {
         address: user.address,
       })
     );
+
     listCarts.forEach(async (tmp) => {
       await dispatch(delItemCarts(tmp));
       await dispatch(

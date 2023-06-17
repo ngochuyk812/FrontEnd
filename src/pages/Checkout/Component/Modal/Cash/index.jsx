@@ -22,7 +22,7 @@ function Cash({ idUser, sumPrice }) {
   const status = useSelector((state) => state.order.error);
   const [isClose, setIsClose] = useState(true);
   let user = useSelector((state) => {
-    return state.auth.user.user;
+    return state.auth.user;
   });
   const [name, setName] = useState(user.name);
   const [sdt, setSdt] = useState(user.phoneNumber);
