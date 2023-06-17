@@ -57,6 +57,8 @@ function ForgotPassWord(props) {
         }
         if(stateForgotPass.status === 'succeeded'){
             dispatch(addNotify({title:"Quên mật khẩu", content:"UserName chính xác", color:colors.success}))
+
+            navigator('/resetPassword')
         }
     },[stateForgotPass]);
     return (

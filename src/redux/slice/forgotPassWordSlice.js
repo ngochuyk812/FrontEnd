@@ -24,7 +24,7 @@ export const forgotPassword = createAsyncThunk('auth/forgotPassword', async ({ u
         return  {type: 0, user : null};
     }
 });
-const forgotPasswordSlice = createSlice({
+const forgotPassWordSlice = createSlice({
     name: 'forgotPassword',
     initialState,
     reducers: {
@@ -54,10 +54,11 @@ const forgotPasswordSlice = createSlice({
                 state.status = 'failed'
                 state.user = null
                 state.error = action.error.message
+
             });
     }
 })
 
-export const { setError } = forgotPasswordSlice.actions
+export const { setError } = forgotPassWordSlice.actions
 
-export default forgotPasswordSlice.reducer
+export default forgotPassWordSlice.reducer
