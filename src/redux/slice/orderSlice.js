@@ -5,28 +5,48 @@ const initialState = {
   listOrders: [],
   error: null,
   status: "",
-  listOrderByUser:[]
+  listOrderByUser: [],
 };
+
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Function to generate a random delivery date
+function getRandomDeliveryDate() {
+  var currentDate = new Date(); // Get the current date
+  var deliveryDays = getRandomNumber(1, 10); // Generate a random number of days for delivery
+  var deliveryDate = new Date(
+    currentDate.getTime() + deliveryDays * 24 * 60 * 60 * 1000
+  ); // Add the random number of days to the current date
+
+  return deliveryDate;
+}
+
 export const getOrderByUser = createAsyncThunk(
-    "order/orderById",
-    async (id) => {
-      console.log(id)
-      const response = await axios.get("http://localhost:3000/orders?idUser="+id);
-      let order = response.data;
-      let rs = []
-      console.log(order)
+  "order/orderById",
+  async (id) => {
+    console.log(id);
+    const response = await axios.get(
+      "http://localhost:3000/orders?idUser=" + id
+    );
+    let order = response.data;
+    let rs = [];
+    console.log(order);
 
-      for(const tmp of order){
-        const orerDetail = await axios.get("http://localhost:3000/ordersDetail?idOrder="+tmp.id)
-        let rsDetail = orerDetail.data
-        let itemRs = {...tmp, detail: rsDetail}
-        rs.push(itemRs)
-        console.log(itemRs)
-
-      }
-     return rs
+    for (const tmp of order) {
+      const orerDetail = await axios.get(
+        "http://localhost:3000/ordersDetail?idOrder=" + tmp.id
+      );
+      let rsDetail = orerDetail.data;
+      let itemRs = { ...tmp, detail: rsDetail };
+      rs.push(itemRs);
+      console.log(itemRs);
     }
+    return rs;
+  }
 );
+
 export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   let response;
   let response2;
@@ -45,13 +65,14 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   }
   const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   const infoProduct = item.infoProduct;
-  console.log(infoProduct);
 
   const firstResponse = await axios.post("http://localhost:3000/orders", {
     idUser: item.idUser,
     totalAmount: item.totalAmount,
     orderDate: formattedDateTime,
     note: note,
+    deliveryDate: getRandomDeliveryDate(),
+    address: item.address,
   });
   response = firstResponse.data;
 
@@ -60,6 +81,7 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
       idOrder: response.id,
       idProduct: e.id,
       nameProduct: e.name,
+      color: e.color,
       quantity: e.quantity,
       price: e.price,
     });
@@ -71,7 +93,6 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
       idOrder: response.id,
       nameUser: item.name,
       phoneNumber: item.sdt,
-      address: item.address,
       province: item.province,
       district: item.district,
     });
@@ -116,21 +137,21 @@ const orderSlice = createSlice({
         state.user = null;
         state.error = action.error.message;
       })
-        .addCase(getOrderByUser.pending, (state) => {
-          state.status = "loading";
-          state.status = "";
-          state.error = "";
-        })
-        .addCase(getOrderByUser.fulfilled, (state, action) => {
-          console.log(action.payload);
-          state.status = "succeeded";
-          state.listOrderByUser = action.payload;
-          state.error = null;
-        })
-        .addCase(getOrderByUser.rejected, (state, action) => {
-          state.status = "failed";
-          state.error = action.error.message;
-        });
+      .addCase(getOrderByUser.pending, (state) => {
+        state.status = "loading";
+        state.status = "";
+        state.error = "";
+      })
+      .addCase(getOrderByUser.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.status = "succeeded";
+        state.listOrderByUser = action.payload;
+        state.error = null;
+      })
+      .addCase(getOrderByUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
 });
 

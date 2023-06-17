@@ -18,11 +18,11 @@ function Cash({ idUser, sumPrice }) {
       return item.status;
     }
   );
-  const listProduct = useSelector((state) => state.product.listProducts);
+  const listProduct = useSelector((state) => state.product.products);
   const status = useSelector((state) => state.order.error);
   const [isClose, setIsClose] = useState(true);
   let user = useSelector((state) => {
-    return state.auth.user.user;
+    return state.auth.user;
   });
   const [name, setName] = useState(user.name);
   const [sdt, setSdt] = useState(user.phoneNumber);
@@ -49,6 +49,7 @@ function Cash({ idUser, sumPrice }) {
           quantity: item.quantity,
           price: tmp.price * item.quantity,
           name: tmp.title,
+          color: item.color,
         });
       }
     });

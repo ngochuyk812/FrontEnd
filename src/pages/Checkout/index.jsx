@@ -12,13 +12,13 @@ import zalopay from "../../images/zalopay.png";
 Index.propTypes = {};
 let choose = null;
 function Index() {
-  const user = useSelector((state) => state.auth.user.user);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   let listCarts = useSelector((state) => {
     return state.cart.listCarts;
   });
   let listProducts = useSelector((state) => {
-    return state.product.listProducts;
+    return state.product.products;
   });
   const [check, setCheck] = useState(false);
   const [modal, setModal] = useState(null);
