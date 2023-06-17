@@ -98,8 +98,8 @@ function ResetPassword(props) {
                         </div>
                         <form action="#" className="signin-form" >
                             <div className="form-group mb-3">
-                                <label className="label" htmlFor="name">Password</label>
-                                <input type="password"  className="form-control" placeholder="Password" onChange={(event)=>{setPassWord(event.target.value)}} required />
+                                <label className="label" htmlFor="name">A New Password</label>
+                                <input type="password"  className="form-control" placeholder="A New Password" onChange={(event)=>{setPassWord(event.target.value)}} required />
                                 <small></small>
                             </div>
                             <div className="form-group mb-3">

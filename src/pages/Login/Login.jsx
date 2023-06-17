@@ -88,7 +88,7 @@ function Login(props) {
               </label>
             </div>
             <div className="w-50 text-md-right forgot" >
-              <Link to={"/forgotpassword"} href="#">Forgot Password</Link>
+              <Link to={'/forgotPassword'} href="#">Forgot Password</Link>
             </div>
           </div>
         </form>

@@ -4,6 +4,7 @@ import Checkout from "../pages/Checkout";
 import Contact from "../pages/Contact";
 import Detail from "../pages/Detail";
 import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import Login from "../pages/Login/Login";
 import Orders from "../pages/Orders";
 import Register from "../pages/Register";
@@ -17,9 +18,9 @@ const publicRoutes = [
   { path: "/", component: Home },
   { path: "/products", component: Products },
   { path: "/contact", component: Contact },
-  { path: "/detail", component: Detail },
+  { path: "/detail/:id", component: Detail },
   { path: "/forgotPassword", component: ForgotPassword },
-
+  {path: "/resetPassword",component: ResetPassword},
   { path: "/login", component: Login },
   { path: "/register", component: Register },
 ];
