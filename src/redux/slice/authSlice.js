@@ -13,9 +13,10 @@ const initialState = {
   mess:'',
   changePass:false
 };
+
 export const updateProfilee = createAsyncThunk('auth/updateProfile', async (user ) => {
     console.log(initialState.user , "dsdsd")
-    const userFull = await  axios.get("http://localhost:3000/users/" + user.id)
+    const userFull = await  axios.get(process.env.REACT_APP_API + "/users/" + user.id)
     let userNew = userFull.data
     userNew = {id: userNew.id, password: userNew.password, ...user}
     console.log(userNew)
@@ -29,7 +30,7 @@ export const updateProfilee = createAsyncThunk('auth/updateProfile', async (user
 export const login = createAsyncThunk(
   "auth/login",
   async ({ username, password }) => {
-    const response = await axios.get("http://localhost:3000/users");
+    const response = await axios.get(process.env.REACT_APP_API + "/users");
     let data = response.data;
     let user;
     user = data.filter((tmp) => {
@@ -47,7 +48,7 @@ export const login = createAsyncThunk(
 );
 export const changePassword = createAsyncThunk('auth/changlePassword', async ( {password, passwordNew}) => {
 
-    let userFull = await  axios.get("http://localhost:3000/users/" + initialState.user.id)
+    let userFull = await  axios.get(process.env.REACT_APP_API + "/users/" + initialState.user.id)
     userFull = userFull.data
     if(userFull.password !== password){
         return {type:'error', mess: "Mật khẩu cũ không chính xác"}
@@ -62,7 +63,7 @@ export const changePassword = createAsyncThunk('auth/changlePassword', async ( {
 export const register = createAsyncThunk(
   "auth/register",
   async ({ username, password, address, phone }) => {
-    const responseCheck = await axios.get("http://localhost:3000/users");
+    const responseCheck = await axios.get(process.env.REACT_APP_API + "/users");
     console.log(responseCheck.data);
     let dataCheck = responseCheck.data;
     let user;
@@ -74,7 +75,7 @@ export const register = createAsyncThunk(
     } else {
       const date = new Date();
       let time = date.getTime();
-      const response = await axios.post("http://localhost:3000/users", {
+      const response = await axios.post(process.env.REACT_APP_API + "/users", {
         id: time,
         username,
         password,

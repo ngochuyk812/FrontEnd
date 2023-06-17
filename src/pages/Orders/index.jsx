@@ -88,6 +88,7 @@ function Index(props) {
     let orderByUser = useSelector(state => state.order.listOrderByUser)
     useEffect(()=>{
         dispatch(getOrderByUser(user.id))
+        console.log("render_order")
     },[])
     return (
         <div className='order_main'>

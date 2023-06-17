@@ -10,7 +10,7 @@ const initialState = {
 
 };
 export const loadProducts = createAsyncThunk("auth/products", async () => {
-  const response = await axios.get("http://localhost:3000/products");
+  const response = await axios.get(process.env.REACT_APP_API + "/products");
   let data = response.data;
   return data;
 });

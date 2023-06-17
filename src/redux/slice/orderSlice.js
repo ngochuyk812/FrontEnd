@@ -28,7 +28,7 @@ export const getOrderByUser = createAsyncThunk(
   async (id) => {
     console.log(id);
     const response = await axios.get(
-      "http://localhost:3000/orders?idUser=" + id
+      process.env.REACT_APP_API + "/orders?idUser=" + id
     );
     let order = response.data;
     let rs = [];
@@ -36,7 +36,7 @@ export const getOrderByUser = createAsyncThunk(
 
     for (const tmp of order) {
       const orerDetail = await axios.get(
-        "http://localhost:3000/ordersDetail?idOrder=" + tmp.id
+        process.env.REACT_APP_API + "/ordersDetail?idOrder=" + tmp.id
       );
       let rsDetail = orerDetail.data;
       let itemRs = { ...tmp, detail: rsDetail };
@@ -52,7 +52,7 @@ export const cancelOrder = createAsyncThunk(
     async (order) => {
       order = {...order, status_transport: -1}
       const response = await axios.put(
-          "http://localhost:3000/orders/" + order.id, order
+          process.env.REACT_APP_API + "/orders/" + order.id, order
       );
       let arrOrder = initialState.listOrderByUser
       let res = response.data;
@@ -81,19 +81,18 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   }
   const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   const infoProduct = item.infoProduct;
-
-  const firstResponse = await axios.post("http://localhost:3000/orders", {
+  let dateExp = getRandomDeliveryDate()
+  const firstResponse = await axios.post(process.env.REACT_APP_API + "/orders", {
     idUser: item.idUser,
     totalAmount: item.totalAmount,
     orderDate: formattedDateTime,
     note: note,
-    deliveryDate: getRandomDeliveryDate(),
+    deliveryDate: dateExp,
     address: item.address,
   });
   response = firstResponse.data;
-
   const postRequests = infoProduct.map((e) => {
-    return axios.post("http://localhost:3000/ordersDetail", {
+    return axios.post(process.env.REACT_APP_API + "/ordersDetail", {
       idOrder: response.id,
       idProduct: e.id,
       nameProduct: e.name,
@@ -105,7 +104,7 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   await Promise.all(postRequests);
 
   if (item.type == 0) {
-    response2 = await axios.post("http://localhost:3000/cashs", {
+    response2 = await axios.post(process.env.REACT_APP_API + "/cashs", {
       idOrder: response.id,
       nameUser: item.name,
       phoneNumber: item.sdt,
@@ -113,7 +112,7 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
       district: item.district,
     });
   } else {
-    response2 = await axios.post("http://localhost:3000/creditCards", {
+    response2 = await axios.post(process.env.REACT_APP_API + "/creditCards", {
       idOrder: response.id,
       accountName: item.name,
       cardNumber: item.cardNumber,
@@ -125,9 +124,11 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   return {
     id: response.id,
     idUser: item.idUser,
-    totalAmount: item.totalAmount,
+    address: item.address,
     orderDate: formattedDateTime,
+    deliveryDate: dateExp,
     note: note,
+    detail:[...infoProduct]
   };
 });
 

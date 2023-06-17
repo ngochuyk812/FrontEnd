@@ -56,6 +56,7 @@ export const Product = ({product})=>{
                     }
                 </div>
                 <div className='button_detail' style={{display:'flex', justifyContent:'space-around'}}>
+
                     <a   className="btn btn-primary addToCart" onClick={handleAddToCart}>Thêm giỏ hàng</a>
                 </div>
             </div>

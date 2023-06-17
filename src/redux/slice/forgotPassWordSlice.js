@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
 
-
 const initialState = {
     user: localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : null,
     error: null,
@@ -11,7 +10,7 @@ const initialState = {
     linkTo: '/'
 }
 export const forgotPassword = createAsyncThunk('auth/forgotPassword', async ({ username }) => {
-    const response = await axios.get('http://localhost:3000/users');
+    const response = await axios.get(process.env.REACT_APP_API + '/users');
     let data =  response.data
     let user
     user = data.filter(tmp=>{
@@ -23,6 +22,16 @@ export const forgotPassword = createAsyncThunk('auth/forgotPassword', async ({ u
     }else{
         return  {type: 0, user : null};
     }
+});
+export const changePassword = createAsyncThunk('auth/changlePasswordV2', async ( password) => {
+    let id = localStorage.getItem('idForgot')
+    let userFull = await  axios.get(process.env.REACT_APP_API + "/users/" + id)
+    userFull = userFull.data
+    userFull = {...userFull, password: password}
+    await axios.put(process.env.REACT_APP_API + '/users/'+userFull.id, userFull);
+
+    return {type:'susscess', mess: "Thay đổi mật khẩu thành công"}
+
 });
 const forgotPasswordSlice = createSlice({
     name: 'forgotPassword',
@@ -43,7 +52,7 @@ const forgotPasswordSlice = createSlice({
             .addCase(forgotPassword.fulfilled, (state, action) => {
                 if(action.payload.type === 1){
                     state.status = 'succeeded'
-
+                    localStorage.setItem('idForgot', action.payload.user.id)
                 }else{
                     state.status = 'error'
                     state.error = 'Tên đăng nhập không tồn tại'
@@ -52,9 +61,16 @@ const forgotPasswordSlice = createSlice({
             })
             .addCase(forgotPassword.rejected, (state, action) => {
                 state.status = 'failed'
-                state.user = null
                 state.error = action.error.message
+            }).addCase(changePassword.pending, (state) => {
+        })
+            .addCase(changePassword.fulfilled, (state, action) => {
+
+            })
+            .addCase(changePassword.rejected, (state, action) => {
+
             });
+
     }
 })
 
