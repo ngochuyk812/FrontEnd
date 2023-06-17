@@ -20,6 +20,7 @@ export const loadCarts = createAsyncThunk("auth/orders", async (idUser) => {
 export const addItemIntoCart = createAsyncThunk(
   "auth/addCart",
   async (item) => {
+
     const response = await axios.post("http://localhost:3000/carts", {
       idProduct: item.id,
       color: item.color,

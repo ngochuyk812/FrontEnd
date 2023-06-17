@@ -47,6 +47,22 @@ export const getOrderByUser = createAsyncThunk(
   }
 );
 
+export const cancelOrder = createAsyncThunk(
+    "order/canelOrder",
+    async (order) => {
+      order = {...order, status_transport: -1}
+      const response = await axios.put(
+          "http://localhost:3000/orders/" + order.id, order
+      );
+      let arrOrder = initialState.listOrderByUser
+      let res = response.data;
+      console.log(arrOrder, res)
+      return res;
+    }
+);
+
+
+
 export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   let response;
   let response2;
@@ -145,13 +161,41 @@ const orderSlice = createSlice({
       .addCase(getOrderByUser.fulfilled, (state, action) => {
         console.log(action.payload);
         state.status = "succeeded";
+        action.payload.forEach(tmp=>{
+          if(!tmp.status_transport){
+            if((new Date(tmp.deliveryDate).getTime() - new Date().getTime()) > 0){
+              tmp['status_transport'] =0
+            }else
+              tmp['status_transport'] =1
+          }
+        })
         state.listOrderByUser = action.payload;
         state.error = null;
       })
       .addCase(getOrderByUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      });
+      })
+        .addCase(cancelOrder.pending, (state) => {
+          state.status = "loading";
+          state.status = "";
+          state.error = "";
+        })
+        .addCase(cancelOrder.fulfilled, (state, action) => {
+          let arr = [...state.listOrderByUser]
+          arr.forEach((tmp, index)=>{
+            if(tmp.id === action.payload.id)
+              arr[index] = action.payload
+          })
+          state.listOrderByUser = arr
+          state.status = "succeeded";
+          state.error = null;
+        })
+        .addCase(cancelOrder.rejected, (state, action) => {
+          state.status = "failed";
+          state.error = action.error.message;
+        })
+    ;
   },
 });
 

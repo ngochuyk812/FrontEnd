@@ -6,9 +6,9 @@
 }
 .profile main{
   flex: 4;
-  height: calc(100vh - 55px);
   background-color: white;
   border-radius: 18px;
+  position: relative;
 }
 .profile{
   background-color: #efebeb;

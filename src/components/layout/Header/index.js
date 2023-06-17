@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./style.scss";
 import { Link } from "react-router-dom";
 import logo from "../../../images/logo.png";
-import MiniCart from "../../MiniCart/MiniCart";
 import { useSelector } from "react-redux";
 
 function Index(props) {
@@ -60,9 +59,7 @@ function Index(props) {
                 </span>
               )}
             </Link>
-            <div className="minicart_header">
-              <MiniCart></MiniCart>
-            </div>
+
           </Link>
           <Link to={"/profile"}>
             <i className="fa fa-user"></i>
