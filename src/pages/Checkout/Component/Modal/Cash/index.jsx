@@ -27,8 +27,6 @@ function Cash({ idUser, sumPrice, callback }) {
   const [name, setName] = useState(user.name);
   const [sdt, setSdt] = useState(user.phoneNumber);
   const [address, setAddress] = useState(user.address);
-  const [province, setProvince] = useState("");
-  const [district, setDistrict] = useState("");
   const [note, setNote] = useState("");
   const getProduct = (id) => {
     let ob = null;
@@ -64,8 +62,6 @@ function Cash({ idUser, sumPrice, callback }) {
         name,
         sdt,
         address,
-        province,
-        district,
         note,
         sumPrice,
         idUser,
@@ -146,25 +142,6 @@ function Cash({ idUser, sumPrice, callback }) {
                 type="text"
                 placeholder="Địa chỉ"
                 value={address}
-                required
-              />
-              <input
-                onChange={(e) => {
-                  setProvince(e.target.value);
-                }}
-                name="conscious"
-                type="text"
-                placeholder="Tỉnh thành"
-                required
-                aria-describedby="name-error"
-              />
-              <input
-                onChange={(e) => {
-                  setDistrict(e.target.value);
-                }}
-                name="district"
-                type="text"
-                placeholder="Quận huyện"
                 required
               />
               <input

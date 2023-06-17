@@ -60,20 +60,20 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   const infoProduct = item.infoProduct;
   const deliveryDate = getRandomDeliveryDate();
-  const calculateTotalAmount=()=> {
+  const calculateTotalAmount = () => {
     let totalAmount = 0;
     for (const e of infoProduct) {
       totalAmount += e.price;
     }
     return totalAmount;
-  }
+  };
   const firstResponse = await axios.post("http://localhost:3000/orders", {
     idUser: item.idUser,
     orderDate: formattedDateTime,
     note: note,
     deliveryDate: deliveryDate.toISOString(),
     address: item.address,
-    totalAmount:calculateTotalAmount()
+    totalAmount: calculateTotalAmount(),
   });
   response = firstResponse.data;
   const postRequests = infoProduct.map((e) => {
@@ -93,8 +93,6 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
       idOrder: response.id,
       nameUser: item.name,
       phoneNumber: item.sdt,
-      province: item.province,
-      district: item.district,
     });
   } else {
     response2 = await axios.post("http://localhost:3000/creditCards", {
@@ -109,9 +107,9 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   return {
     id: response.id,
     idUser: item.idUser,
-    totalAmount:calculateTotalAmount(),
+    totalAmount: calculateTotalAmount(),
     orderDate: formattedDateTime,
-    deliveryDate: deliveryDate.toISOString(), // Convert to a string
+    deliveryDate: deliveryDate.toISOString(),
     note: note,
     idOrder: response.id,
   };
@@ -157,19 +155,5 @@ const orderSlice = createSlice({
       });
   },
 });
-
-const saveListProductIntoLs = (listProducts) => {
-  localStorage.setItem("listProducts", JSON.stringify(listProducts));
-};
-const getListProductIntoLs = () => {
-  return JSON.parse(localStorage.getItem("listProducts"));
-};
-const saveListCartIntoLs = (listCarts) => {
-  localStorage.setItem("listCarts", JSON.stringify(listCarts));
-};
-const getListCartsIntoLs = () => {
-  return JSON.parse(localStorage.getItem("listCarts"));
-};
-const removeCartToLS = () => {};
 export const { removeItemFromCart } = orderSlice.actions;
 export default orderSlice.reducer;

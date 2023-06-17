@@ -95,12 +95,7 @@ function Index() {
             </div>
             <div className="cart-total-row">
               <p>Total</p>
-              <span className="cart-summary-price">
-                {sumPrice().total.toLocaleString("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                })}
-              </span>
+              <span className="cart-summary-price">{sumPrice().total}$</span>
             </div>
             <p className="payment-title">Choose form to payment</p>
             <div className="payment">
