@@ -11,7 +11,7 @@ import { changeStatus } from "../../../../../redux/slice/productSlice";
 
 Cash.propTypes = {};
 
-function Cash({ idUser, sumPrice }) {
+function Cash({ idUser, sumPrice, callback }) {
   const dispatch = useDispatch();
   const listCarts = useSelector((state) => state.cart.listCarts).filter(
     (item) => {
@@ -27,8 +27,6 @@ function Cash({ idUser, sumPrice }) {
   const [name, setName] = useState(user.name);
   const [sdt, setSdt] = useState(user.phoneNumber);
   const [address, setAddress] = useState(user.address);
-  const [province, setProvince] = useState("");
-  const [district, setDistrict] = useState("");
   const [note, setNote] = useState("");
   const getProduct = (id) => {
     let ob = null;
@@ -55,6 +53,7 @@ function Cash({ idUser, sumPrice }) {
     });
     return product;
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
@@ -63,8 +62,6 @@ function Cash({ idUser, sumPrice }) {
         name,
         sdt,
         address,
-        province,
-        district,
         note,
         sumPrice,
         idUser,
@@ -99,6 +96,7 @@ function Cash({ idUser, sumPrice }) {
           color: colors.success,
         })
       );
+      callback(true);
       setIsClose(false);
     }
   };
@@ -144,25 +142,6 @@ function Cash({ idUser, sumPrice }) {
                 type="text"
                 placeholder="Địa chỉ"
                 value={address}
-                required
-              />
-              <input
-                onChange={(e) => {
-                  setProvince(e.target.value);
-                }}
-                name="conscious"
-                type="text"
-                placeholder="Tỉnh thành"
-                required
-                aria-describedby="name-error"
-              />
-              <input
-                onChange={(e) => {
-                  setDistrict(e.target.value);
-                }}
-                name="district"
-                type="text"
-                placeholder="Quận huyện"
                 required
               />
               <input

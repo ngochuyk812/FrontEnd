@@ -7,7 +7,6 @@ import ForgotPassword from "../pages/ForgotPassword";
 import Login from "../pages/Login/Login";
 import Orders from "../pages/Orders";
 import Register from "../pages/Register";
-import Profile from "../components/layout";
 import InfoUser from "../pages/Profile";
 import Layout from "../components/layout";
 import Setting from "../pages/Setting";

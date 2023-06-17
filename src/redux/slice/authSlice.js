@@ -117,8 +117,8 @@ const profileSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         console.log(action);
         if (action.payload.type === 1) {
-            let user = action.payload.user
-            delete user.password
+          let user = action.payload.user;
+          delete user.password;
           state.status = "succeeded";
           state.user = user;
           state.error = null;

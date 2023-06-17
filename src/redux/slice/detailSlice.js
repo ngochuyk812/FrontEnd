@@ -33,7 +33,6 @@ const detailSlice = createSlice({
             .addCase(getProduct.fulfilled, (state, action) => {
 
                 state.status = "succeeded";
-
                 state.product = action.payload
                 console.log(action.payload)
             })

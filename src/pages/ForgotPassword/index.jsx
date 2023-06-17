@@ -139,7 +139,7 @@ function ForgotPassWord(props) {
                         </div>
                     </div>
                 </div>
-            }</>
+            </>
     );
 }
 

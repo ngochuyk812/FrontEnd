@@ -154,12 +154,7 @@ function Item({ item }) {
         onChange={handleChangeColor}
         options={options}
       />
-      <p className="cart-item-price">
-        {product.price.toLocaleString("vi-VN", {
-          style: "currency",
-          currency: "VND",
-        })}{" "}
-      </p>
+      <p className="cart-item-price">{product.price}$ </p>
       <div className="cart-item-count">
         <p
           onClick={() =>

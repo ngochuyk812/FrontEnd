@@ -3,30 +3,25 @@ import axios from "axios";
 
 const initialState = {
   listOrders: [],
+  order1: null,
   error: null,
   status: "",
   listOrderByUser: [],
 };
-
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-// Function to generate a random delivery date
 function getRandomDeliveryDate() {
-  var currentDate = new Date(); // Get the current date
-  var deliveryDays = getRandomNumber(1, 10); // Generate a random number of days for delivery
+  var currentDate = new Date();
+  var deliveryDays = getRandomNumber(1, 10);
   var deliveryDate = new Date(
     currentDate.getTime() + deliveryDays * 24 * 60 * 60 * 1000
-  ); // Add the random number of days to the current date
-
+  );
   return deliveryDate;
 }
-
 export const getOrderByUser = createAsyncThunk(
   "order/orderById",
   async (id) => {
-    console.log(id);
     const response = await axios.get(
       process.env.REACT_APP_API + "/orders?idUser=" + id
     );
@@ -79,16 +74,23 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   } else {
     note = "";
   }
+  const calculateTotalAmount = () => {
+    let totalAmount = 0;
+    for (const e of infoProduct) {
+      totalAmount += e.price;
+    }
+    return totalAmount;
+  };
   const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   const infoProduct = item.infoProduct;
   let dateExp = getRandomDeliveryDate()
   const firstResponse = await axios.post(process.env.REACT_APP_API + "/orders", {
     idUser: item.idUser,
-    totalAmount: item.totalAmount,
     orderDate: formattedDateTime,
     note: note,
     deliveryDate: dateExp,
     address: item.address,
+    totalAmount: calculateTotalAmount(),
   });
   response = firstResponse.data;
   const postRequests = infoProduct.map((e) => {
@@ -108,8 +110,6 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
       idOrder: response.id,
       nameUser: item.name,
       phoneNumber: item.sdt,
-      province: item.province,
-      district: item.district,
     });
   } else {
     response2 = await axios.post(process.env.REACT_APP_API + "/creditCards", {
@@ -120,15 +120,19 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
       cvv: item.cvv,
     });
   }
-
+  var currentDate = new Date();
+  var deliveryDays = getRandomNumber(1, 10);
+  var deliveryDate = new Date(
+      currentDate.getTime() + deliveryDays * 24 * 60 * 60 * 1000
+  );
   return {
     id: response.id,
     idUser: item.idUser,
-    address: item.address,
+    totalAmount: calculateTotalAmount(),
     orderDate: formattedDateTime,
-    deliveryDate: dateExp,
+    deliveryDate: deliveryDate.toISOString(),
     note: note,
-    detail:[...infoProduct]
+    idOrder: response.id,
   };
 });
 
@@ -146,6 +150,7 @@ const orderSlice = createSlice({
       .addCase(addOrder.fulfilled, (state, action) => {
         console.log(action.payload);
         state.status = "succeeded";
+        state.order1 = action.payload;
         state.listOrders = [...state.listOrders, action.payload];
         state.error = null;
       })
@@ -199,19 +204,5 @@ const orderSlice = createSlice({
     ;
   },
 });
-
-const saveListProductIntoLs = (listProducts) => {
-  localStorage.setItem("listProducts", JSON.stringify(listProducts));
-};
-const getListProductIntoLs = () => {
-  return JSON.parse(localStorage.getItem("listProducts"));
-};
-const saveListCartIntoLs = (listCarts) => {
-  localStorage.setItem("listCarts", JSON.stringify(listCarts));
-};
-const getListCartsIntoLs = () => {
-  return JSON.parse(localStorage.getItem("listCarts"));
-};
-const removeCartToLS = () => {};
 export const { removeItemFromCart } = orderSlice.actions;
 export default orderSlice.reducer;
