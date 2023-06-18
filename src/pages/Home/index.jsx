@@ -84,7 +84,9 @@ function Index(props) {
             });
           }}
         >
-          Xem Thêm
+          Xem thêm
+          <break />
+          <i style={{ marginLeft: "5px" }} class="fa-solid fa-angles-down"></i>
         </a>
       </div>
     </div>
