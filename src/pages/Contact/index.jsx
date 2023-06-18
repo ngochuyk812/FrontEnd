@@ -1,5 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import './style.scss'
+import {useDispatch, useSelector} from "react-redux";
+import Notify from '../../components/Notify/Notify';
+import {addNotify} from "../../redux/slice/notifySlice";
+import {colors} from "../../components/Notify/Notify";
+import {feedbackPost} from "../../redux/slice/feedbackSlice";
+import { Link, useNavigate } from 'react-router-dom';
+import {getIdUser,loadFeedback} from "../../redux/slice/feedbackSlice";
+
 
 Contact.propTypes = {
 
@@ -7,175 +15,105 @@ Contact.propTypes = {
 
 
 function Contact(props) {
+    let id = window.location.pathname.split("/")[2];
 
-    //
-    //
-    // const [values, setValues] = useState({
-    //     name: '',
-    //     email: '',
-    //     phone: ''
-    // });
-    //
-    // const [errors, setErrors] = useState({
-    //     name: '',
-    //     email: '',
-    //     phone: ''
-    // });
-    //
-    // const [submitted, setSubmitted] = useState(false);
-    //
-    // const handleChange = event => {
-    //     const { name, value } = event.target;
-    //     setValues({
-    //         ...values,
-    //         [name]: value
-    //     });
-    //
-    //
-    // };
-    //
-    // const handleSubmit = event => {
-    //     event.preventDefault();
-    //     setSubmitted(true);
-    //     if (validateForm()) {
-    //
-    //     }
-    // };
-    //
-    // const validateForm = (event) => {
-    //     let isValid = true;
-    //     const newErrors = { ...errors };
-    //
-    //     // Validate name
-    //
-    //     if (!values.name) {
-    //         isValid = false;
-    //         newErrors.name = 'Vui lòng nhập tên của bạn';
-    //     } else if (values.name.length < 3) {
-    //         isValid = false;
-    //         newErrors.name = 'Tên phải dài trên 3 ký tự';
-    //     } else {
-    //         newErrors.name = '';
-    //     }
-    //
-    //     // Validate email
-    //     if (!values.email) {
-    //         isValid = false;
-    //         newErrors.email = 'Vui lòng nhập email';
-    //     }  else {
-    //         newErrors.email = '';
-    //     }
-    //
-    //     // Validate phone
-    //     if (!values.phone) {
-    //         isValid = false;
-    //         newErrors.phone = 'Vui lòng nhập số điện thoại của bạn';
-    //     } else if (isNaN(values.phone) || values.phone.length < 10) {
-    //         isValid = false;
-    //         newErrors.phone = 'Không nhập ký tự chữ và số điện thoại phải 10 số';
-    //     } else {
-    //         newErrors.phone = '';
-    //     }
-    //
-    //
-    //
-    //     setErrors(newErrors);
-    //     return isValid;
-    // };
-    //
-    // const validateField = fieldName => {
-    //     if (submitted) {
-    //         switch (fieldName) {
-    //             case 'name':
-    //                 return errors.name ? 'error' : 'success';
-    //             case 'email':
-    //                 return errors.email ? 'error' : 'success';
-    //             case 'phone':
-    //                 return errors.phone ? 'error' : 'success';
-    //             default:
-    //                 return '';
-    //         }
-    //     } else {
-    //         return '';
-    //     }
-    // };
+    const dispatch = useDispatch()
+    let user = useSelector((state) => state.auth.user);
 
 
+    let feedbacks = useSelector((state) => state.feedback.feedback);
+    const [username, setUsername] = useState('')
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [feedback, setFeedback] = useState('')
+    const feedbackState = useSelector(state => {
+        return state.feedback
+    })
 
-
-
-    const [inputName, setInputName] = useState("");
-    const [inputEmail, setInputEmail] = useState("");
-    const [inputPhone, setInputPhone] = useState("");
-    const [errorMessageName, setErrorMessageName] = useState("");
-    const [errorMessageEmail, setErrorMessageEmail] = useState("");
-    const [errorMessagePhone, setErrorMessagePhone] = useState("");
-
-    const handleChangeName = (e) => {
-        const name = e.target.value;
-
-
-
-
-
-
-
-            // Validate name
-        setInputName(name);
-
-            if (!name) {
-
-             setErrorMessageName('Vui lòng nhập tên của bạn');
-            } else if (name.length < 3) {
-
-                setErrorMessageName ('Tên phải dài trên 3 ký tự');
+    const linkTo = useSelector(state =>{
+        return state.auth.linkTo
+    })
+    const navigator = useNavigate()
+    useEffect(() => {
+        dispatch(getIdUser(id));
+        dispatch(loadFeedback(id));
+    }, []);
+    const handleFeedback = (e) => {
+        let check = true
+        e.preventDefault()
+        let arrInput = document.querySelectorAll(".form__feedback input")
+        arrInput.forEach(tmp => {
+            if (tmp.value === '') {
+                tmp.style.border = '1px solid red'
+                check = false
             } else {
-                setErrorMessageName('');
+                tmp.style.border = '1px solid lightgray'
+
             }
+        })
+        // if (check) {
+        //     if (isNaN(Number(phone)) || phone.length < 10) {
+        //         dispatch(addNotify({
+        //             title: "Số điện thoại phải là số và trên 10 số",
+        //             content: 'Số điện thoại không đúng định dạng',
+        //             color: colors.error
+        //         }))
+        //         return
+        //
+        //     }
+        //     if (name.length < 3) {
+        //
+        //         dispatch(addNotify({
+        //             title: "Vui lòng nhập lại thông ",
+        //             content: 'Tên phải dài trên 3 ký tự',
+        //             color: colors.error
+        //         }))
+        //     } else{
+        //
+        //
+        //     }
+        //
+        // }
+
+        if(name && email && phone && feedback){
+
+            dispatch(feedbackPost({
+                idUser: user.id,
+                userName: user.username,
+                content: feedback,
+
+
+            }));
+            dispatch(
+                addNotify({
+                    title: "Thành công",
+                    content: "Thêm feedback thành công",
+                    color: colors.success,
+                })
+            );
+        } else {
+            dispatch(
+                addNotify({
+                    title: "Thất bại",
+                    content: "Feedback thất bại",
+                    color: colors.error,
+                })
+            );
+
+
+        }
 
         };
-    const handleChangeEmail = (e) => {
-        const email = e.target.value;
-        // Validate email
-        setInputEmail(email);
-        if (!email) {
 
-            setErrorMessageEmail('Vui lòng nhập email của bạn');
-        }  else {
-            setErrorMessageEmail('');
-        }
-
-    };
-    const handleChangePhone = (e) => {
-        const phone = e.target.value;
-        // Validate phone
-        setInputPhone(phone);
-        if (!phone) {
-
-            setErrorMessagePhone('Vui lòng nhập số điện thoại của bạn');
-        } else if (isNaN(phone) || phone.length !== 10 ) {
-
-            setErrorMessagePhone('Không nhập ký tự chữ và số điện thoại phải 10 s');
-        } else {
-            setErrorMessagePhone('');
-        }
+    const onClickBtn = () =>{
 
 
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // do something with the form data
-    };
-
-const onClickBtn = () =>{
-
-
-    var scrollToElement = document.getElementById('container');
+        var scrollToElement = document.getElementById('container');
 
 
         scrollToElement.scrollIntoView({ behavior: 'smooth' });
-}
+    }
 
     return (
         <div style={{marginTop:"100px"}}>
@@ -248,7 +186,7 @@ const onClickBtn = () =>{
                         {/*        </button>*/}
                         {/*    </div>*/}
                         {/*</form>*/}
-                        <form action="#" method="post" onSubmit={handleSubmit} >
+                        <form action="#" method="post" className="form__feedback">
                             <div className="mb-3">
                                 <label htmlFor="name" className="form-label">
                                     Name
@@ -258,13 +196,11 @@ const onClickBtn = () =>{
 
                                     className="form-control"
                                     name="name"
-                                    required=""
                                     placeholder={"Tên của bạn"}
-                                    value={inputName}
-                                    onChange={handleChangeName}
-
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
                                 />
-                                {errorMessageName && <p>{errorMessageName}</p>}
+
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">
@@ -276,20 +212,22 @@ const onClickBtn = () =>{
 
 
                                     name="email"
-                                    required=""
+
                                     placeholder={"Email của bạn"}
-                                    value={inputEmail}
-                                    onChange={handleChangeEmail}
+
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
-                                {errorMessageEmail && <p>{errorMessageEmail}</p>}
+
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="phone" className="form-label">
                                     Phone
                                 </label>
-                                <input type="tel" placeholder={"Số điện thoại của bạn"} className="form-control" name="phone" value={inputPhone}
-                                       onChange={handleChangePhone} />
-                                {errorMessagePhone && <p>{errorMessagePhone}</p>}
+                                <input type="text" placeholder={"Số điện thoại của bạn"} className="form-control"
+                                       name="phone"
+                                       onChange={(e) => setPhone(e.target.value)} required/>
+
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="message" className="form-label">
@@ -300,15 +238,17 @@ const onClickBtn = () =>{
                                     id="message"
                                     name="message"
                                     rows={5}
-                                    required=""
-                                    defaultValue={""}
-                                    style={{paddingTop:"20px"}}
+
+                                    style={{paddingTop: "20px"}}
                                     placeholder={"Liên hệ với chúng tôi..."}
+                                    onChange={(e) => setFeedback(e.target.value)} required
 
                                 />
                             </div>
                             <div className="mb-3">
-                                <button type="submit" className="btn btn-primary"  >
+                                <button type="submit" className="btn btn-primary"  onClick={(e) => {
+                                    handleFeedback(e)
+                                }} >
                                     Send Message
                                 </button>
                             </div>
@@ -317,74 +257,71 @@ const onClickBtn = () =>{
                             <div className="col" >
                                 <div className="row>" style={{display:"flex" ,alignItems:"center"}}>
 
-                                <div className="col-md-4" >
-                                    <h4>Tp. Hồ Chí Minh</h4>
-                                    <p>
-                                        <img src="https://via.placeholder.com/150x150" alt="Store Image" />
-                                    </p>
+                                    <div className="col-md-4" >
+                                        <h4>Tp. Hồ Chí Minh</h4>
+                                        <p>
+                                            <img  style ={{width:"150px", height:"150px"}}src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjdTTNlpHJ0WrwrubuygKz9HxBBECIgsSrvTkHqetBwx6-UDhwHDjSX3rVEEytMmn82wM&usqp=CAU" alt="Store Image" />
+                                        </p>
                                     </div>
                                     <div className="col-md-1" style={{whiteSpace:"nowrap"}}  >
-                                    <p >123 Đường ABC, Quận XYZ</p>
-                                    <p>
-                                        <i className="fas fa-phone" /> 0123456789
-                                    </p>
-                                    <p>
-                                        <i className="fas fa-envelope" /> info@dohoshop.com
-                                    </p>
-                                    <button type="button"  id="viewMap1" className="btn btn-primary" onClick={onClickBtn}>
-                                        Xem bản đồ
-                                    </button>
+                                        <p >123 Đường ABC, Quận XYZ</p>
+                                        <p>
+                                            <i className="fas fa-phone" /> 0123456789
+                                        </p>
+                                        <p>
+                                            <i className="fas fa-envelope" /> info@dohoshop.com
+                                        </p>
+                                        <button type="button"  id="viewMap1" className="btn btn-primary" onClick={onClickBtn}>
+                                            Xem bản đồ
+                                        </button>
                                     </div>
                                 </div>
                                 <hr/>
                                 <div className="row>" style={{display:"flex" ,alignItems:"center"}}>
-                                <div className="col-md-4">
-                                    <h4>Hà Nội</h4>
-                                    <p>
-                                        <img src="https://via.placeholder.com/150x150" alt="Store Image" />
-                                    </p>
-                                </div>
+                                    <div className="col-md-4">
+                                        <h4>Hà Nội</h4>
+                                        <p>
+                                            <img  style ={{width:"150px", height:"150px"}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSx3mqiLqr3lb2UHo-y16mtRZh8VpmzKQUhaTZ5im4xfNQur7fYdybTfC0kBf5pABfC7A&usqp=CAU" alt="Store Image" />
+                                        </p>
+                                    </div>
                                     <div className="col-md-1" style={{whiteSpace:"nowrap"}}  >
-                                    <p>456 Đường DEF, Quận UVW</p>
-                                    <p>
-                                        <i className="fas fa-phone" /> 0123456789
-                                    </p>
-                                    <p>
-                                        <i className="fas fa-envelope" /> info@dohoshop.com
-                                    </p>
-                                    <button type="button"  id="viewMap2" className="btn btn-primary" onClick={onClickBtn}>
-                                        Xem bản đồ
-                                    </button>
-                                </div>
+                                        <p>456 Đường DEF, Quận UVW</p>
+                                        <p>
+                                            <i className="fas fa-phone" /> 0123456789
+                                        </p>
+                                        <p>
+                                            <i className="fas fa-envelope" /> info@dohoshop.com
+                                        </p>
+                                        <button type="button"  id="viewMap2" className="btn btn-primary" onClick={onClickBtn}>
+                                            Xem bản đồ
+                                        </button>
+                                    </div>
                                 </div>
                                 <hr/>
                                 <div className="row>" style={{display:"flex" ,alignItems:"center"}}>
-                                <div className="col-md-4">
-                                    <h4>Đà Nẵng</h4>
-                                    <p>
-                                        <img src="https://via.placeholder.com/150x150" alt="Store Image" />
-                                    </p>
-                                </div>
+                                    <div className="col-md-4">
+                                        <h4>Đà Nẵng</h4>
+                                        <p>
+                                            <img style ={{width:"150px", height:"150px"}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWO4FCBp6lMljfdQocIBNN_mduwRwYQq3JIA&usqp=CAU" alt="Store Image" />
+                                        </p>
+                                    </div>
                                     <div className="col-md-1" style={{whiteSpace:"nowrap"}}  >
-                                    <p>789 Đường GHI, Quận JKL</p>
-                                    <p>
-                                        <i className="fas fa-phone" /> 0123456789
-                                    </p>
-                                    <p>
-                                        <i className="fas fa-envelope" /> info@dohoshop.com
-                                    </p>
-                                    <button type="button"   id="viewMap3" className="btn btn-primary" onClick={onClickBtn}>
-                                        Xem bản đồ
-                                    </button>
-                                </div>
+                                        <p>789 Đường GHI, Quận JKL</p>
+                                        <p>
+                                            <i className="fas fa-phone" /> 0123456789
+                                        </p>
+                                        <p>
+                                            <i className="fas fa-envelope" /> info@dohoshop.com
+                                        </p>
+                                        <button type="button"   id="viewMap3" className="btn btn-primary" onClick={onClickBtn}>
+                                            Xem bản đồ
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
-                        <p>
-                            <i className="fas fa-map-marker-alt" /> 123 Main Street, New York, NY
-                            10001
-                        </p>
+
                         <p>
                             <i className="fas fa-phone" /> (123) 456-7890
                         </p>

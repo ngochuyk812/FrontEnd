@@ -9,6 +9,7 @@ import orderSlice from "./slice/orderSlice";
 import forgotPassWordSlice from "./slice/forgotPassWordSlice";
 import resetPassWordSlice from "./slice/resetPassWordSlice";
 import detailSlice from "./slice/detailSlice";
+import feedbackSlice from "./slice/feedbackSlice";
 
 
 export const store = configureStore({
@@ -21,7 +22,8 @@ export const store = configureStore({
     order: orderSlice,
     forgotPassWord: forgotPassWordSlice,
     resetPassWord: resetPassWordSlice,
-    detail:detailSlice
+    detail:detailSlice,
+    feedback: feedbackSlice
 
 
 

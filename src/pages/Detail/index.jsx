@@ -10,7 +10,15 @@ import "slick-carousel/slick/slick-theme.css";
 
 import ProductReviewsList from "./Component";
 import {getProduct} from "../../redux/slice/detailSlice";
+import {login} from "../../redux/slice/authSlice"
+
+
 import Loading from "../../components/Loading/Loading";
+import {commentReviewPost} from "../../redux/slice/detailSlice";
+import {addItemIntoCart} from "../../redux/slice/cartSlice";
+import {addNotify} from "../../redux/slice/notifySlice";
+import {colors} from "../../components/Notify/Notify";
+
 
 
 
@@ -18,10 +26,12 @@ Index.propTypes = {
 
 };
 
-function Index(props) {
+function Index(props ) {
     let dispatch = useDispatch()
     let id = window.location.pathname.split('/')[2]
     let product = useSelector(state=>state.detail.product)
+    let user = useSelector(state => state.auth.user )
+
     const [imageActive, setImageActive] = useState(0)
     const [colorActive, setColorActive] = useState('')
     console.log(product)
@@ -113,6 +123,51 @@ function Index(props) {
 
 
     }
+    const commentState = useSelector(state =>{
+        return state.comments
+    })
+    const [comments, setComments] = useState(() =>{
+
+    });
+
+
+    useEffect(() => {
+        localStorage.setItem('comments', JSON.stringify(comments));
+    }, [comments]);
+
+    const [newComment, setNewComment] = useState('');
+
+    const [username, setUsername] = useState('')
+
+
+                // let item = useSelector((state) => state.detail.product).filter((item) => {
+                //     return item.idProduct == product.id;
+                // });
+    const handleAddComment = (e) => {
+        e.preventDefault();
+        setComments([newComment,...comments ]);
+        setNewComment('');
+        if (comments != null) {
+            dispatch(
+                commentReviewPost({  content:newComment,
+                    userName:user.name,
+
+                })
+            );
+        } else {
+            dispatch(
+                addNotify({
+                    title: "Thất bại",
+                    content: "Commnet thất bại",
+                    color: colors.error,
+                })
+            );
+        }
+
+    };
+    const handleInputChange = (event) => {
+        setNewComment(event.target.value);
+    };
 
     return (
         <div style={{backgroundColor:'lightgray'}}>
@@ -214,15 +269,27 @@ function Index(props) {
                                     rows={3}
                                     defaultValue={""}
                                     placeholder={"Đánh giá sản phẩm tại đây..."}
-                                    value={textInput}
-                                    onChange={onTextInputChange}
+                                    value={newComment}
+                                    onChange={handleInputChange}
                                 />
-                                <button style={{height: "50px",marginLeft: " 15px" }} disabled={!textInput} type="submit" className="btn btn-primary" onClick={onAddBtnClick}>
+                                <button style={{height: "50px",marginLeft: " 15px" }} disabled={!newComment} type="submit" className="btn btn-primary" onClick={handleAddComment}>
                                     Submit
                                 </button>
                             </div>
 
-                            <ProductReviewsList todoList ={productReviewList}></ProductReviewsList>
+
+                            <ul>
+
+
+                                {comments.map((comment,index) => (
+
+
+                                        <ProductReviewsList  key ={index} comment ={comment}>comment</ProductReviewsList>
+
+                                    )
+                                )};
+
+                            </ul>
                         </form>
                     </div>
 
