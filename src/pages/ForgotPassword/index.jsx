@@ -86,60 +86,61 @@ function ForgotPassWord(props) {
     },[stateForgotPass]);
     return (
         <>
-                <div className='main_login '>
 
-                    <div className='login_form '>
-                        <div className='backgroud'>
+            <div className='main_login '>
 
-                        </div>
-                        <div className='login'>
-                            <div className="login-wrap p-4 p-md-5">
-                                <div className="">
-                                    <h3 className="mb-4" style={{textAlign:'center'}}>Forgot Password</h3>
+                <div className='login_form '>
+                    <div className='backgroud'>
 
-                                </div>
-                                <form action="#" className="signin-form" >
-                                    <div className="form-group mb-3">
-                                        <label className="label" htmlFor="name">UserName</label>
-                                        <input type="text" value={username} disabled={step === 2 ? true : false}  className="form-control" placeholder="UserName" onChange={(event)=>{
-                                            setStep(0)
-                                            setUsername(event.target.value)}} required />
-                                        <small></small>
-                                    </div>
-                                    {step=== 1 || step === 2?
-                                        <div className="form-group mb-3">
-                                            <label className="label" htmlFor="name">Nhập OTP</label>
-                                            <input type="text" value={otp}  className="form-control" disabled={step === 2 ? true : false} placeholder="00000" onChange={(event)=>{setOTP(event.target.value)}} required />
-                                            <small></small>
-                                        </div>
-
-                                    :''}
-                                    {step=== 2 ?
-                                        <>
-                                            <div className="form-group mb-3">
-                                                <label className="label" htmlFor="name">Mật khẩu mới</label>
-                                                <input ref={refPass} type="password" value={password}  className="form-control" placeholder="********" onChange={(event)=>{setPass(event.target.value)}} required />
-                                                <small></small>
-                                            </div>
-                                            <div className="form-group mb-3">
-                                                <label className="label" htmlFor="name">Nhập lại</label>
-                                                <input ref={refRePass} type="password" value={re_pass}  className="form-control" placeholder="********" onChange={(event)=>{setRePass(event.target.value)}} required />
-                                                <small></small>
-                                            </div></>
-                                        :''}
-
-
-                                    <div className="form-group">
-                                        <button type="submit" onClick={(e)=>{handleSubmit(e)}} className="form-control btn btn-primary rounded submit px-3">Tiếp tục</button>
-                                    </div>
-
-                                </form>
+                    </div>
+                    <div className='login'>
+                        <div className="login-wrap p-4 p-md-5">
+                            <div className="">
+                                <h3 className="mb-4" style={{textAlign:'center'}}>Forgot Password</h3>
 
                             </div>
+                            <form action="#" className="signin-form" >
+                                <div className="form-group mb-3">
+                                    <label className="label" htmlFor="name">UserName</label>
+                                    <input type="text" value={username} disabled={step === 2 ? true : false}  className="form-control" placeholder="UserName" onChange={(event)=>{
+                                        setStep(0)
+                                        setUsername(event.target.value)}} required />
+                                    <small></small>
+                                </div>
+                                {step=== 1 || step === 2?
+                                    <div className="form-group mb-3">
+                                        <label className="label" htmlFor="name">Nhập OTP</label>
+                                        <input type="text" value={otp}  className="form-control" disabled={step === 2 ? true : false} placeholder="00000" onChange={(event)=>{setOTP(event.target.value)}} required />
+                                        <small></small>
+                                    </div>
+
+                                    :''}
+                                {step=== 2 ?
+                                    <>
+                                        <div className="form-group mb-3">
+                                            <label className="label" htmlFor="name">Mật khẩu mới</label>
+                                            <input ref={refPass} type="password" value={password}  className="form-control" placeholder="********" onChange={(event)=>{setPass(event.target.value)}} required />
+                                            <small></small>
+                                        </div>
+                                        <div className="form-group mb-3">
+                                            <label className="label" htmlFor="name">Nhập lại</label>
+                                            <input ref={refRePass} type="password" value={re_pass}  className="form-control" placeholder="********" onChange={(event)=>{setRePass(event.target.value)}} required />
+                                            <small></small>
+                                        </div></>
+                                    :''}
+
+
+                                <div className="form-group">
+                                    <button type="submit" onClick={(e)=>{handleSubmit(e)}} className="form-control btn btn-primary rounded submit px-3">Tiếp tục</button>
+                                </div>
+
+                            </form>
+
                         </div>
                     </div>
                 </div>
-            </>
+            </div>
+           </>
     );
 }
 

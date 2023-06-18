@@ -42,7 +42,7 @@ function Contact(props) {
     const handleFeedback = (e) => {
         let check = true
         e.preventDefault()
-        let arrInput = document.querySelectorAll(".form__feedback input")
+        let arrInput = document.querySelectorAll(".form__feedback input ")
         arrInput.forEach(tmp => {
             if (tmp.value === '') {
                 tmp.style.border = '1px solid red'
@@ -82,8 +82,6 @@ function Contact(props) {
                 idUser: user.id,
                 userName: user.username,
                 content: feedback,
-
-
             }));
             dispatch(
                 addNotify({

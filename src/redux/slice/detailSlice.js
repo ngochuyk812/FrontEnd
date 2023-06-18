@@ -1,9 +1,12 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
-
+import { useDispatch } from "react-redux";
 const initialState = {
     product: null,
+    user:
+        localStorage.getItem("user") !== "undefined"
+            ? JSON.parse(localStorage.getItem("user"))
+            : null,
     comments: [],
     status: '',
     error: ''
@@ -12,42 +15,43 @@ export const getProduct = createAsyncThunk('detail/getProductById', async (id) =
     let response = await  axios.get(process.env.REACT_APP_API + "/products/" + id)
     let product = response.data
     return product
+})
 
-
-});
-export const loadComment = createAsyncThunk("auth/detail", async () => {
-    const response = await axios.get("http://localhost:3000/comments");
-    let data = response.data;
-    return data;
-    console.log(data)
-});
-export const commentReviewPost = createAsyncThunk('detail/comments', async (comments) => {
-        console.log(comments)
-        const resp = await axios.post("http://localhost:3000/comments", {
-            ...comments
+export const loadComment = createAsyncThunk(
+    "auth/loadComment",
+    async (idProduct) => {
+        const response = await axios.get("http://localhost:3000/comments", {
+            params: {
+                idProduct: idProduct,
+            },
         });
-    let data = resp.data;
-        return {type: 1, data};
-
+        let data = response.data;
+        return data;
+    }
+);
+export const commentReviewPost = createAsyncThunk(
+    "detail/comments",
+    async (comments) => {
+        const resp = await axios.post("http://localhost:3000/comments", {
+            ...comments,
+        });
+        let data = resp.data;
+        return data;
     }
 );
 const detailSlice = createSlice({
-    name: 'details',
+    name: "details",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(getProduct.pending, (state) => {
-
                 state.status = "loading";
-                state.error = ''
-
+                state.error = "";
             })
             .addCase(getProduct.fulfilled, (state, action) => {
-
                 state.status = "succeeded";
-                state.product = action.payload
-                console.log(action.payload)
+                state.product = action.payload;
             })
             .addCase(getProduct.rejected, (state, action) => {
                 state.status = "failed";
@@ -55,21 +59,33 @@ const detailSlice = createSlice({
             })
             .addCase(commentReviewPost.pending, (state) => {
                 state.status = "loading";
-                state.error = ''
-
+                state.error = "";
             })
             .addCase(commentReviewPost.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                state.co = action.payload
-                console.log(action.payload)
+                // action.payload;
+                state.comments = [...state.comments,action.payload];
             })
             .addCase(commentReviewPost.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.error.message;
-
             })
+            .addCase(loadComment.pending, (state) => {
+                state.status = "loading";
+                state.error = "";
+            })
+            .addCase(loadComment.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                console.log(action.payload)
+                // action.payload;
+                state.comments = [...action.payload];
+            })
+            .addCase(loadComment.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.error.message;
+            });
     },
-})
-export const {setError} = detailSlice.actions;
+});
+export const { setError } = detailSlice.actions;
 
-export default detailSlice.reducer
+export default detailSlice.reducer;

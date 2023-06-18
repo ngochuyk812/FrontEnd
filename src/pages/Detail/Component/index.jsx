@@ -41,7 +41,7 @@ import {useSelector} from "react-redux";
                     <div className="container__feedback__title">
 
                         <h6>
-                            <strong>Nhận xét:</strong> {comment}
+                            <strong>Nhận xét:</strong> {comment.content}
                         </h6>
                     </div>
                     </div>
