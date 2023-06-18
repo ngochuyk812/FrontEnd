@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
+import { Link } from "react-router-dom";
 
 import { addNotify } from "../../../redux/slice/notifySlice";
 import { changeStatus } from "../../../redux/slice/productSlice";
@@ -137,7 +138,7 @@ function Item({ item }) {
   };
 
   return (
-    <div className="cart-item">
+    <div style={{ color: "black" }} className="cart-item">
       <div className="cart-item-radio">
         <input
           onChange={() => handelIsActive()}
@@ -146,35 +147,44 @@ function Item({ item }) {
           checked={isActive}
         />
       </div>
-      <img className="cart-item-img" src={product.images[0]} alt="" />
-      <p className="cart-item-name">{product.title}</p>
-      <Select
-        style={{ marginRight: "10px" }}
-        value={selectedOption}
-        onChange={handleChangeColor}
-        options={options}
-      />
-      <p className="cart-item-price">{product.price}$ </p>
-      <div className="cart-item-count">
-        <p
-          onClick={() =>
-            item.quantity !== 0 && handleChangeQuantity(item, false)
-          }
-          className="item-count-decrease"
-        >
-          <i class="fa-sharp fa-solid fa-minus"></i>
-        </p>
-        <p className="item-count">{item.quantity}</p>
-        <p
-          onClick={() => handleChangeQuantity(item, true)}
-          className="item-count-increase"
-        >
-          <i class="fa-sharp fa-solid fa-plus"></i>
+
+      <Link
+        to={`${process.env.REACT_APP_HOST_SERVER}/detail/${product.id}`}
+        className="cart-item-link"
+      >
+        {" "}
+        <img className="cart-item-img" src={product.images[0]} alt="" />
+        <p className="cart-item-name">{product.title}</p>
+      </Link>
+      <div className="cart-item-choose">
+        <Select
+          style={{ marginRight: "10px" }}
+          value={selectedOption}
+          onChange={handleChangeColor}
+          options={options}
+        />
+        <p className="cart-item-price">{product.price}$ </p>
+        <div className="cart-item-count">
+          <p
+            onClick={() =>
+              item.quantity !== 0 && handleChangeQuantity(item, false)
+            }
+            className="item-count-decrease"
+          >
+            <i class="fa-sharp fa-solid fa-minus"></i>
+          </p>
+          <p className="item-count">{item.quantity}</p>
+          <p
+            onClick={() => handleChangeQuantity(item, true)}
+            className="item-count-increase"
+          >
+            <i class="fa-sharp fa-solid fa-plus"></i>
+          </p>
+        </div>
+        <p onClick={() => handleDelItem(item)} className="cart-item-del">
+          <i class="fa-sharp fa-solid fa-trash"></i>
         </p>
       </div>
-      <p onClick={() => handleDelItem(item)} className="cart-item-del">
-        <i class="fa-sharp fa-solid fa-trash"></i>
-      </p>
     </div>
   );
 }
