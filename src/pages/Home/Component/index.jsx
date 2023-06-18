@@ -128,14 +128,14 @@ function Item({ product }) {
       </div>
       {!product.status ? (
         <button
-          className={"item-addCart" + (check == null ? " disable" : "")}
+          className={"btn btn-primary" + (check == null ? " disable" : "")}
           disabled={check == null}
           onClick={handelAddCart}
         >
           ADD TO CART
         </button>
       ) : (
-        <button onClick={handelRemoveCart} className="item-delCart">
+        <button onClick={handelRemoveCart} className="btn btn-danger">
           Remove From Cart
         </button>
       )}
