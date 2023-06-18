@@ -8,6 +8,7 @@ import cartSlice from "./slice/cartSlice";
 import orderSlice from "./slice/orderSlice";
 import forgotPassWordSlice from "./slice/forgotPassWordSlice";
 import detailSlice from "./slice/detailSlice";
+import feedbackSlice from "./slice/feedbackSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,8 +19,8 @@ export const store = configureStore({
     cart: cartSlice,
     order: orderSlice,
     forgotPassWord: forgotPassWordSlice,
-    detail:detailSlice
-
-
+    resetPassWord: resetPassWordSlice,
+    detail:detailSlice,
+    feedback: feedbackSlice
   },
 });
