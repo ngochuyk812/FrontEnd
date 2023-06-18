@@ -5,12 +5,26 @@
          opacity: 1;
      }
 }
+.card{
+    cursor: pointer;
+}
 .card_img{
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     height: 283px;
     transition: all 0.5s ease-in-out;
+
+}
+.card .card-price{
+    font-size: 23px;
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 10px;
+
+}
+.card .card-price::before{
+    content: '$';
 
 }
 .card{

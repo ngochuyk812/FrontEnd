@@ -10,7 +10,7 @@ const initialState = {
 export const register = createAsyncThunk(
   "auth/register",
   async ({ username, password, address, phone }) => {
-    const responseCheck = await axios.get("http://localhost:3000/users");
+    const responseCheck = await axios.get(process.env.REACT_APP_API + "/users");
     let dataCheck = responseCheck.data;
     let user;
     user = dataCheck.filter((tmp) => {
@@ -21,7 +21,7 @@ export const register = createAsyncThunk(
     } else {
       const date = new Date();
       let time = date.getTime();
-      const response = await axios.post("http://localhost:3000/users", {
+      const response = await axios.post(process.env.REACT_APP_API + "/users", {
         id: time,
         username,
         password,

@@ -7,7 +7,6 @@ import ForgotPassword from "../pages/ForgotPassword";
 import Login from "../pages/Login/Login";
 import Orders from "../pages/Orders";
 import Register from "../pages/Register";
-import Profile from "../components/layout";
 import InfoUser from "../pages/Profile";
 import Layout from "../components/layout";
 import Setting from "../pages/Setting";
@@ -17,9 +16,8 @@ const publicRoutes = [
   { path: "/", component: Home },
   { path: "/products", component: Products },
   { path: "/contact", component: Contact },
-  { path: "/detail", component: Detail },
+  { path: "/detail/:id", component: Detail },
   { path: "/forgotPassword", component: ForgotPassword },
-
   { path: "/login", component: Login },
   { path: "/register", component: Register },
 ];

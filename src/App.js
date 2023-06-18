@@ -21,6 +21,7 @@ function App() {
   });
   useEffect(() => {
     dispatch(loadProducts());
+
   }, []);
   useEffect(() => {
     if (user) {
@@ -31,6 +32,7 @@ function App() {
   return (
     <BrowserRouter>
       <div>
+
         {notify.content !== "" ? (
           <Notify
             color={notify.color}

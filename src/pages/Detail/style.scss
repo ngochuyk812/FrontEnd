@@ -14,3 +14,50 @@
 .show-less-btn {
   margin-top: 10px;
 }
+.slide_show_detail{
+  position: relative;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex: 1;
+}
+.detail_title{
+  flex: 1;
+}
+.top_details{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 30px;
+  gap: 30px;
+}
+
+.slide_show_detail .fa-angle-left{
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  font-size: 40px;
+  cursor: pointer;
+
+}
+@keyframes animation_detail {
+  from{
+    opacity: 0;
+  }to{
+       opacity: 1;
+     }
+}
+.aminition_details{
+  animation: animation_detail 1s ;
+}
+.slide_show_detail .fa-angle-right{
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  font-size: 40px;
+  cursor: pointer;
+
+}
+.main_details{
+  margin-top: 58px;
+  padding-top: 20px;
+}

@@ -1,20 +1,26 @@
 import { useState } from 'react'
 import './style.css'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { addNotify, removeNotify } from '../../redux/slice/notifySlice'
 function Notify({color, title, content}) {
     const [hide,setHide]= useState(false)
     const dispatch = useDispatch()
+    const notifySel = useSelector(state=>state.notify)
     useEffect(()=>{
         setTimeout(()=>{
-            setHide(true)
             dispatch(removeNotify())
         },1700)
     },[])
+    useEffect(()=>{
+        if(notifySel.title === '' && notifySel.content === ''){
+            setHide(true)
+
+        }
+    },[notifySel])
     return (
         <div style={{position:'fixed', top:'70px',right:'20px',zIndex:1000000}}>
-            <div className='main_notify' style={hide ? {display:'none'}: {}}>
+            <div className='main_notify' style={hide ? {opacity:0}: {}}>
             <div className='content_notify' style={{backgroundColor:color}}>
                 <span className='top'></span>
                 <div className='text'>

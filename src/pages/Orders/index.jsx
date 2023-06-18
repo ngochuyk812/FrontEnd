@@ -4,94 +4,98 @@ import {useDispatch, useSelector} from "react-redux";
 import ReactTable from 'react-table'
 import {getOrderByUser} from "../../redux/slice/orderSlice";
 import {Space, Table, Tag} from "antd";
+import OrdersDetail from "./components/OrdersDetail";
     Index.propTypes = {
 
 };
 
 function Index(props) {
-
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sydney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
+    const [orderDetail, setOrderDetail] = useState(null)
     const columns= [
         {
-            title: 'Đơn hàng',
-            dataIndex: 'name',
-            key: 'name',
-            render: (text) => <a>{text}</a>,
-        },
+            title: '#ID',
+            dataIndex: 'id',
+        }
+        ,
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-        },
-        {
-            title: 'Address',
+            title: 'Đại chỉ',
             dataIndex: 'address',
-            key: 'address',
+        },
+
+        {
+            title: 'Tổng tiền',
+            dataIndex: '',
+            render: (_, { detail }) => {
+                let total = 0
+                detail.map(tmp=>{
+                    total += (tmp.price * tmp.quantity)
+                })
+                return (<div>{total}</div>)
+            }
         },
         {
-            title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: (_, { tags }) => (
-                <>
-                    {tags.map((tag) => {
-                        let color = tag.length > 5 ? 'geekblue' : 'green';
-                        if (tag === 'loser') {
-                            color = 'volcano';
-                        }
-                        return (
-                            <Tag color={color} key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        );
-                    })}
-                </>
-            ),
-        },
+            title: 'Trạng thái',
+            dataIndex: 'status_transport',
+            render: (_, { status_transport }) => {
+                let status = 'Chưa giao'
+                let color = status_transport > 0 ? 'green' : 'geekblue';
+                if (status_transport === 1) {
+                    status = 'Đã giao';
+                }
+                if(status_transport === - 1){
+                    color = 'red'
+                    status = 'Đã hủy';
+
+                }
+                return (
+                    <Tag color={color} key={color}>
+                        {status}
+                    </Tag>
+                );
+            },
+        }
+        ,
         {
             title: 'Action',
-            key: 'action',
-            render: (_, record) => (
+            key: '',
+            render: (_, {id}) => (
                 <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
+                    <a onClick={()=>{handleDetailOrder(id)}}><i style={{color:'green'}} className="fa-solid fa-circle-info"></i></a>
                 </Space>
             ),
         },
     ];
+    const handleDetailOrder = (id)=>{
+        const orderSelect = orderByUser.filter(tmp=>tmp.id === id)
+        setOrderDetail(orderSelect[0])
+        showModal()
+    }
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     let dispatch = useDispatch()
     let user = useSelector(state => state.auth.user)
     let orderByUser = useSelector(state => state.order.listOrderByUser)
     useEffect(()=>{
         dispatch(getOrderByUser(user.id))
+        console.log("render_order")
     },[])
     return (
-        <div>
-            <h3>Đơn hàng</h3>
+        <div className='order_main'>
+            {orderDetail ? <OrdersDetail isModalOpen={isModalOpen} order = {orderDetail} handleOk={handleOk} handleCancel={handleCancel}/> : ''}
+            <h3 style={{marginTop:20, marginLeft:30, marginBottom:30, fontWeight:600}}>Đơn hàng</h3>
             <div className='content'>
-                <Table dataSource={data} columns={columns} />;
+                <Table dataSource={orderByUser} columns={columns} />;
 
             </div>
         </div>
