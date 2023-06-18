@@ -28,7 +28,8 @@ function Item({ product }) {
   };
 
   const check = numberOfProducts();
-  const handelAddCart = () => {
+  const handelAddCart = (e) => {
+    e.preventDefault();
     if (user != null) {
       if (numberOfProducts() != null) {
         dispatch(
@@ -58,7 +59,8 @@ function Item({ product }) {
       );
     }
   };
-  const handelRemoveCart = () => {
+  const handelRemoveCart = (e) => {
+    e.preventDefault();
     if (user !== null) {
       dispatch(delItemCarts(item[0]));
       handleAfterDelItemCarts();
@@ -115,7 +117,11 @@ function Item({ product }) {
     }
   };
   return (
-    <div className="home-item" href="">
+    <Link
+      to={`${process.env.REACT_APP_HOST_SERVER}/detail/${product.id}`}
+      className="home-item"
+      href=""
+    >
       <div className="item-img">
         <img className="item-img" src={product.images[0]} alt="" />
       </div>
@@ -130,16 +136,23 @@ function Item({ product }) {
         <button
           className={"btn btn-primary" + (check == null ? " disable" : "")}
           disabled={check == null}
-          onClick={handelAddCart}
+          onClick={(e) => {
+            handelAddCart(e);
+          }}
         >
           ADD TO CART
         </button>
       ) : (
-        <button onClick={handelRemoveCart} className="btn btn-danger">
+        <button
+          onClick={(e) => {
+            handelRemoveCart(e);
+          }}
+          className="btn btn-danger"
+        >
           Remove From Cart
         </button>
       )}
-    </div>
+    </Link>
   );
 }
 export default Item;
