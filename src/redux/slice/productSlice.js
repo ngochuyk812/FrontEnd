@@ -10,32 +10,11 @@ const initialState = {
 
 };
 export const loadProducts = createAsyncThunk("auth/products", async () => {
-  const response = await axios.get("http://localhost:3000/products");
+  const response = await axios.get(process.env.REACT_APP_API + "/products");
   let data = response.data;
   return data;
 });
-export const changeQuantity = createAsyncThunk(
-  "auth/changeQuantity",
-  async (item) => {
-    let quantity;
-    if (item.type == 0) {
-      quantity = item.quantity + item.count;
-    } else {
-      quantity = item.quantity - item.count;
-    }
-    const response = await axios.patch(
-      `http://localhost:3000/products/${item.id}`,
-      {
-        quantity,
-      }
-    );
-    let data = response.data;
-    return {
-      id: item.id,
-      quantity: quantity,
-    };
-  }
-);
+
 const productsSlice = createSlice({
   name: "products",
   initialState,

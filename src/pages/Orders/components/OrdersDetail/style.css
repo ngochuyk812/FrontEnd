@@ -1,0 +1,16 @@
+.modal_detail_order{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 33;
+    background-color: rgba(211, 211, 211, 0.63);
+    display: flex;
+    justify-content: center;
+
+}
+
+.modal_detail_order > div{
+    background-color: white;
+}

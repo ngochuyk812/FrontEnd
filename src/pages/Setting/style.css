@@ -4,3 +4,6 @@
 .editUser input{
     color: black;
 }
+.container_changle_password >div{
+    margin-bottom: 10px;
+}

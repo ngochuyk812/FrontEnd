@@ -9,8 +9,7 @@ const initialState = {
     error: ''
 }
 export const getProduct = createAsyncThunk('detail/getProductById', async (id) => {
-
-    let response = await axios.get("http://localhost:3000/products/" + id)
+    let response = await  axios.get(process.env.REACT_APP_API + "/products/" + id)
     let product = response.data
     return product
 

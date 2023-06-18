@@ -10,10 +10,13 @@ const initialState = {
   error: null,
   status: "",
   linkTo: "/",
+  mess:'',
+  changePass:false
 };
+
 export const updateProfilee = createAsyncThunk('auth/updateProfile', async (user ) => {
     console.log(initialState.user , "dsdsd")
-    const userFull = await  axios.get("http://localhost:3000/users/" + user.id)
+    const userFull = await  axios.get(process.env.REACT_APP_API + "/users/" + user.id)
     let userNew = userFull.data
     userNew = {id: userNew.id, password: userNew.password, ...user}
     console.log(userNew)
@@ -23,10 +26,11 @@ export const updateProfilee = createAsyncThunk('auth/updateProfile', async (user
     delete userNew.password
     return userNew
 });
+
 export const login = createAsyncThunk(
   "auth/login",
   async ({ username, password }) => {
-    const response = await axios.get("http://localhost:3000/users");
+    const response = await axios.get(process.env.REACT_APP_API + "/users");
     let data = response.data;
     let user;
     user = data.filter((tmp) => {
@@ -42,10 +46,24 @@ export const login = createAsyncThunk(
     }
   }
 );
+export const changePassword = createAsyncThunk('auth/changlePassword', async ( {password, passwordNew}) => {
+
+    let userFull = await  axios.get(process.env.REACT_APP_API + "/users/" + initialState.user.id)
+    userFull = userFull.data
+    if(userFull.password !== password){
+        return {type:'error', mess: "Mật khẩu cũ không chính xác"}
+    }else{
+        userFull = {...userFull, password: passwordNew}
+        await axios.put('http://localhost:3000/users/'+userFull.id, userFull);
+        return {type:'susscess', mess: "Thay đổi mật khẩu thành công"}
+    }
+
+
+});
 export const register = createAsyncThunk(
   "auth/register",
   async ({ username, password, address, phone }) => {
-    const responseCheck = await axios.get("http://localhost:3000/users");
+    const responseCheck = await axios.get(process.env.REACT_APP_API + "/users");
     console.log(responseCheck.data);
     let dataCheck = responseCheck.data;
     let user;
@@ -57,7 +75,7 @@ export const register = createAsyncThunk(
     } else {
       const date = new Date();
       let time = date.getTime();
-      const response = await axios.post("http://localhost:3000/users", {
+      const response = await axios.post(process.env.REACT_APP_API + "/users", {
         id: time,
         username,
         password,
@@ -84,6 +102,10 @@ const profileSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+      setChangePass: (state, action) => {
+          state.changePass = action.payload;
+          state.mess= ''
+      },
   },
   extraReducers: (builder) => {
     builder
@@ -95,13 +117,13 @@ const profileSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         console.log(action);
         if (action.payload.type === 1) {
-            let user = action.payload.user
-            delete user.password
+          let user = action.payload.user;
+          delete user.password;
           state.status = "succeeded";
           state.user = user;
           state.error = null;
           console.log(state.user);
-          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("user", JSON.stringify(action.payload.user));
         } else {
           state.status = "error";
           state.error = "Tài khoản hoặc mật khẩu không chính xác";
@@ -146,10 +168,39 @@ const profileSlice = createSlice({
             state.status = 'failed'
             state.error = action.error.message
 
-        });
+        })
+        .addCase(changePassword.pending, (state) => {
+
+            state.status = "loading";
+            state.error = ''
+            state.mess = ''
+            state.changePass = false
+
+        })
+        .addCase(changePassword.fulfilled, (state, action) => {
+
+            if(action.payload.type === 'error'){
+                state.status = "failed";
+                state.mess = action.payload.mess
+            }else{
+                state.status = "succeeded";
+                state.mess = action.payload.mess
+
+            }
+            state.changePass = true
+
+        })
+        .addCase(changePassword.rejected, (state, action) => {
+            state.status = "failed";
+
+            state.error = action.error.message;
+            state.mess = action.error.message;
+            state.changePass = true
+
+        })
   },
 });
 
-export const { logout, setLinkTo, setError } = profileSlice.actions;
+export const { logout, setLinkTo, setChangePass } = profileSlice.actions;
 
 export default profileSlice.reducer;

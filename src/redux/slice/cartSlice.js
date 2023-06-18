@@ -8,18 +8,24 @@ const initialState = {
   status: "",
   linkTo: "/",
 };
-export const loadCarts = createAsyncThunk("auth/orders", async () => {
-  const response = await axios.get("http://localhost:3000/carts");
+export const loadCarts = createAsyncThunk("auth/orders", async (idUser) => {
+  const response = await axios.get(process.env.REACT_APP_API + "/carts", {
+    params: {
+      idUser: idUser,
+    },
+  });
   let data = response.data;
   return data;
 });
 export const addItemIntoCart = createAsyncThunk(
   "auth/addCart",
   async (item) => {
-    const response = await axios.post("http://localhost:3000/carts", {
+
+    const response = await axios.post(process.env.REACT_APP_API + "/carts", {
       idProduct: item.id,
       color: item.color,
       quantity: 1,
+      idUser: item.idUser,
     });
     let data = response.data;
     return {
@@ -34,7 +40,7 @@ export const addItemIntoCart = createAsyncThunk(
 
 export const delItemCarts = createAsyncThunk("auth/delCart", async (item) => {
   //send id order
-  const response = await axios.delete(`http://localhost:3000/carts/${item.id}`);
+  const response = await axios.delete(process.env.REACT_APP_API + `/carts/${item.id}`);
   let data = response.data;
   return item;
 });
@@ -43,7 +49,7 @@ export const changeQuantityItemCarts = createAsyncThunk(
   async (item) => {
     const quantity = item.type ? item.quantity + 1 : item.quantity - 1;
     const response = await axios.patch(
-      `http://localhost:3000/carts/${item.id}`,
+      process.env.REACT_APP_API + `/carts/${item.id}`,
       {
         quantity: quantity,
       }
@@ -60,7 +66,7 @@ export const changeColorItemCarts = createAsyncThunk(
   async (item) => {
     console.log(item);
     const response = await axios.patch(
-      `http://localhost:3000/carts/${item.id}`,
+      process.env.REACT_APP_API + `/carts/${item.id}`,
       {
         color: item.color,
       }
@@ -127,7 +133,6 @@ const cartSlice = createSlice({
         console.log([...state.listCarts, tmp]);
         state.status = "add item into cart";
         state.error = null;
-        console.log(123);
         console.log(state.listCarts);
         saveListCartIntoLs(state.listCarts);
       })

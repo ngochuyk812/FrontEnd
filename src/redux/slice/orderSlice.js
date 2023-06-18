@@ -3,30 +3,61 @@ import axios from "axios";
 
 const initialState = {
   listOrders: [],
+  order1: null,
   error: null,
   status: "",
-  listOrderByUser:[]
+  listOrderByUser: [],
 };
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function getRandomDeliveryDate() {
+  var currentDate = new Date();
+  var deliveryDays = getRandomNumber(1, 10);
+  var deliveryDate = new Date(
+    currentDate.getTime() + deliveryDays * 24 * 60 * 60 * 1000
+  );
+  return deliveryDate;
+}
 export const getOrderByUser = createAsyncThunk(
-    "order/orderById",
-    async (id) => {
-      console.log(id)
-      const response = await axios.get("http://localhost:3000/orders?idUser="+id);
-      let order = response.data;
-      let rs = []
-      console.log(order)
+  "order/orderById",
+  async (id) => {
+    const response = await axios.get(
+      process.env.REACT_APP_API + "/orders?idUser=" + id
+    );
+    let order = response.data;
+    let rs = [];
+    console.log(order);
 
-      for(const tmp of order){
-        const orerDetail = await axios.get("http://localhost:3000/ordersDetail?idOrder="+tmp.id)
-        let rsDetail = orerDetail.data
-        let itemRs = {...tmp, detail: rsDetail}
-        rs.push(itemRs)
-        console.log(itemRs)
+    for (const tmp of order) {
+      const orerDetail = await axios.get(
+        process.env.REACT_APP_API + "/ordersDetail?idOrder=" + tmp.id
+      );
+      let rsDetail = orerDetail.data;
+      let itemRs = { ...tmp, detail: rsDetail };
+      rs.push(itemRs);
+      console.log(itemRs);
+    }
+    return rs;
+  }
+);
 
-      }
-     return rs
+export const cancelOrder = createAsyncThunk(
+    "order/canelOrder",
+    async (order) => {
+      order = {...order, status_transport: -1}
+      const response = await axios.put(
+          process.env.REACT_APP_API + "/orders/" + order.id, order
+      );
+      let arrOrder = initialState.listOrderByUser
+      let res = response.data;
+      console.log(arrOrder, res)
+      return res;
     }
 );
+
+
+
 export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   let response;
   let response2;
@@ -43,23 +74,31 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   } else {
     note = "";
   }
+  const calculateTotalAmount = () => {
+    let totalAmount = 0;
+    for (const e of infoProduct) {
+      totalAmount += e.price;
+    }
+    return totalAmount;
+  };
   const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   const infoProduct = item.infoProduct;
-  console.log(infoProduct);
-
-  const firstResponse = await axios.post("http://localhost:3000/orders", {
+  let dateExp = getRandomDeliveryDate()
+  const firstResponse = await axios.post(process.env.REACT_APP_API + "/orders", {
     idUser: item.idUser,
-    totalAmount: item.totalAmount,
     orderDate: formattedDateTime,
     note: note,
+    deliveryDate: dateExp,
+    address: item.address,
+    totalAmount: calculateTotalAmount(),
   });
   response = firstResponse.data;
-
   const postRequests = infoProduct.map((e) => {
-    return axios.post("http://localhost:3000/ordersDetail", {
+    return axios.post(process.env.REACT_APP_API + "/ordersDetail", {
       idOrder: response.id,
       idProduct: e.id,
       nameProduct: e.name,
+      color: e.color,
       quantity: e.quantity,
       price: e.price,
     });
@@ -67,16 +106,13 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
   await Promise.all(postRequests);
 
   if (item.type == 0) {
-    response2 = await axios.post("http://localhost:3000/cashs", {
+    response2 = await axios.post(process.env.REACT_APP_API + "/cashs", {
       idOrder: response.id,
       nameUser: item.name,
       phoneNumber: item.sdt,
-      address: item.address,
-      province: item.province,
-      district: item.district,
     });
   } else {
-    response2 = await axios.post("http://localhost:3000/creditCards", {
+    response2 = await axios.post(process.env.REACT_APP_API + "/creditCards", {
       idOrder: response.id,
       accountName: item.name,
       cardNumber: item.cardNumber,
@@ -84,13 +120,19 @@ export const addOrder = createAsyncThunk("auth/addOrder", async (item) => {
       cvv: item.cvv,
     });
   }
-
+  var currentDate = new Date();
+  var deliveryDays = getRandomNumber(1, 10);
+  var deliveryDate = new Date(
+      currentDate.getTime() + deliveryDays * 24 * 60 * 60 * 1000
+  );
   return {
     id: response.id,
     idUser: item.idUser,
-    totalAmount: item.totalAmount,
+    totalAmount: calculateTotalAmount(),
     orderDate: formattedDateTime,
+    deliveryDate: deliveryDate.toISOString(),
     note: note,
+    idOrder: response.id,
   };
 });
 
@@ -108,6 +150,7 @@ const orderSlice = createSlice({
       .addCase(addOrder.fulfilled, (state, action) => {
         console.log(action.payload);
         state.status = "succeeded";
+        state.order1 = action.payload;
         state.listOrders = [...state.listOrders, action.payload];
         state.error = null;
       })
@@ -116,36 +159,50 @@ const orderSlice = createSlice({
         state.user = null;
         state.error = action.error.message;
       })
-        .addCase(getOrderByUser.pending, (state) => {
+      .addCase(getOrderByUser.pending, (state) => {
+        state.status = "loading";
+        state.status = "";
+        state.error = "";
+      })
+      .addCase(getOrderByUser.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.status = "succeeded";
+        action.payload.forEach(tmp=>{
+          if(!tmp.status_transport){
+            if((new Date(tmp.deliveryDate).getTime() - new Date().getTime()) > 0){
+              tmp['status_transport'] =0
+            }else
+              tmp['status_transport'] =1
+          }
+        })
+        state.listOrderByUser = action.payload;
+        state.error = null;
+      })
+      .addCase(getOrderByUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+        .addCase(cancelOrder.pending, (state) => {
           state.status = "loading";
           state.status = "";
           state.error = "";
         })
-        .addCase(getOrderByUser.fulfilled, (state, action) => {
-          console.log(action.payload);
+        .addCase(cancelOrder.fulfilled, (state, action) => {
+          let arr = [...state.listOrderByUser]
+          arr.forEach((tmp, index)=>{
+            if(tmp.id === action.payload.id)
+              arr[index] = action.payload
+          })
+          state.listOrderByUser = arr
           state.status = "succeeded";
-          state.listOrderByUser = action.payload;
           state.error = null;
         })
-        .addCase(getOrderByUser.rejected, (state, action) => {
+        .addCase(cancelOrder.rejected, (state, action) => {
           state.status = "failed";
           state.error = action.error.message;
-        });
+        })
+    ;
   },
 });
-
-const saveListProductIntoLs = (listProducts) => {
-  localStorage.setItem("listProducts", JSON.stringify(listProducts));
-};
-const getListProductIntoLs = () => {
-  return JSON.parse(localStorage.getItem("listProducts"));
-};
-const saveListCartIntoLs = (listCarts) => {
-  localStorage.setItem("listCarts", JSON.stringify(listCarts));
-};
-const getListCartsIntoLs = () => {
-  return JSON.parse(localStorage.getItem("listCarts"));
-};
-const removeCartToLS = () => {};
 export const { removeItemFromCart } = orderSlice.actions;
 export default orderSlice.reducer;

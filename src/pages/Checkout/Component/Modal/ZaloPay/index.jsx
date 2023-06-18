@@ -11,14 +11,15 @@ import { changeStatus } from "../../../../../redux/slice/productSlice";
 
 ZaloPay.propTypes = {};
 
-function ZaloPay({ idUser, sumPrice }) {
+function ZaloPay({ idUser, sumPrice, callback }) {
   const dispatch = useDispatch();
   const listCarts = useSelector((state) => state.cart.listCarts).filter(
     (item) => {
       return item.status;
     }
   );
-  const listProduct = useSelector((state) => state.product.listProducts);
+  const user = useSelector((state) => state.auth.user);
+  const listProduct = useSelector((state) => state.product.products);
   const [isClose, setIsClose] = useState(true);
   const [hidden, setHidden] = useState(false);
   const [accountName, setAccountName] = useState("");
@@ -35,21 +36,24 @@ function ZaloPay({ idUser, sumPrice }) {
     });
     return ob;
   };
+
   const infoProduct = () => {
-    const product = [];
+    const products = [];
     listCarts.forEach((item) => {
       if (item.status) {
         const tmp = getProduct(item.idProduct);
-        product.push({
+        products.push({
           id: item.idProduct,
           quantity: item.quantity,
           price: tmp.price * item.quantity,
           name: tmp.title,
+          color: item.color,
         });
       }
     });
-    return product;
+    return products;
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
@@ -63,6 +67,7 @@ function ZaloPay({ idUser, sumPrice }) {
         sumPrice,
         idUser,
         type: 1,
+        address: user.address,
       })
     );
     listCarts.forEach(async (tmp) => {
@@ -94,6 +99,7 @@ function ZaloPay({ idUser, sumPrice }) {
           color: colors.success,
         })
       );
+      callback(true);
       setIsClose(false);
     }
   };
