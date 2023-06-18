@@ -29,7 +29,6 @@ export const changePassword = createAsyncThunk('auth/changlePasswordV2', async (
     userFull = userFull.data
     userFull = {...userFull, password: password}
     await axios.put(process.env.REACT_APP_API + '/users/'+userFull.id, userFull);
-
     return {type:'susscess', mess: "Thay đổi mật khẩu thành công"}
 
 });

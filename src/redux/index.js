@@ -19,7 +19,6 @@ export const store = configureStore({
     cart: cartSlice,
     order: orderSlice,
     forgotPassWord: forgotPassWordSlice,
-    resetPassWord: resetPassWordSlice,
     detail:detailSlice,
     feedback: feedbackSlice
   },
