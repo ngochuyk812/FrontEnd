@@ -34,12 +34,17 @@ export const loadFeedback = createAsyncThunk(
 );
 export const feedbackPost = createAsyncThunk(
     "contact/feedback",
-    async (  {idUser, userName, content, phone, feedback} ) => {
+    async (  {
+                 name,
+                 email,
+                 phone,
+                 feedback
+             } ) => {
         const resp = await axios.post("http://localhost:3000/feedback", {
-            userName,
-            content,
-            idUser
-
+            name,
+            email,
+            phone,
+            feedback
         });
         let data = resp.data;
         return data;

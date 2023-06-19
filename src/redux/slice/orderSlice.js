@@ -38,7 +38,7 @@ export const getOrderByUser = createAsyncThunk(
       rs.push(itemRs);
       console.log(itemRs);
     }
-    return rs;
+    return rs.reverse();
   }
 );
 

@@ -90,6 +90,7 @@ function Index(props) {
         dispatch(getOrderByUser(user.id))
         console.log("render_order")
     },[])
+
     return (
         <div className='order_main'>
             {orderDetail ? <OrdersDetail isModalOpen={isModalOpen} order = {orderDetail} handleOk={handleOk} handleCancel={handleCancel}/> : ''}

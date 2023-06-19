@@ -2,17 +2,29 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
+
+const initUser = ()=>{
+    if(localStorage.getItem("user") == 'undefined' || localStorage.getItem("user") == 'null'){
+        if(sessionStorage.getItem("user") == 'undefined' || sessionStorage.getItem("user") == 'undefined'){
+            return undefined
+        }else{
+            return JSON.parse(sessionStorage.getItem("user"))
+        }
+    }else{
+        return JSON.parse(localStorage.getItem("user"))
+    }
+}
+
 const initialState = {
-  user:
-    localStorage.getItem("user") !== "undefined"
-      ? JSON.parse(localStorage.getItem("user"))
-      : null,
+  user: initUser(),
   error: null,
   status: "",
   linkTo: "/",
   mess:'',
   changePass:false
 };
+
+
 
 export const updateProfilee = createAsyncThunk('auth/updateProfile', async (user ) => {
     console.log(initialState.user , "dsdsd")
@@ -29,7 +41,7 @@ export const updateProfilee = createAsyncThunk('auth/updateProfile', async (user
 
 export const login = createAsyncThunk(
   "auth/login",
-  async ({ username, password }) => {
+  async ({ username, password, remenber }) => {
     const response = await axios.get(process.env.REACT_APP_API + "/users");
     let data = response.data;
     let user;
@@ -40,15 +52,15 @@ export const login = createAsyncThunk(
     });
     console.log("user ", user);
     if (user.length !== 0) {
-      return { type: 1, user: user[0] };
+      return { type: 1, user: user[0], remenber };
     } else {
-      return { type: 0, user: null };
+      return { type: 0, user: null, remenber };
     }
   }
 );
-export const changePassword = createAsyncThunk('auth/changlePassword', async ( {password, passwordNew}) => {
+export const changePassword = createAsyncThunk('auth/changlePassword', async ( {password, passwordNew, id}) => {
 
-    let userFull = await  axios.get(process.env.REACT_APP_API + "/users/" + initialState.user.id)
+    let userFull = await  axios.get(process.env.REACT_APP_API + "/users/" + id)
     userFull = userFull.data
     if(userFull.password !== password){
         return {type:'error', mess: "Mật khẩu cũ không chính xác"}
@@ -94,7 +106,9 @@ const profileSlice = createSlice({
     logout: (state, action) => {
       state.user = null;
       state.status = "logout";
-      localStorage.setItem("user", null);
+      localStorage.setItem("user", undefined);
+      sessionStorage.setItem("user", undefined);
+
     },
     setLinkTo: (state, action) => {
       state.linkTo = action.payload;
@@ -122,8 +136,12 @@ const profileSlice = createSlice({
           state.status = "succeeded";
           state.user = user;
           state.error = null;
-          console.log(state.user);
-          localStorage.setItem("user", JSON.stringify(action.payload.user));
+
+          if(action.payload.remenber){
+              localStorage.setItem("user", JSON.stringify(action.payload.user));
+          }else{
+              sessionStorage.setItem("user", JSON.stringify(action.payload.user))
+          }
         } else {
           state.status = "error";
           state.error = "Tài khoản hoặc mật khẩu không chính xác";
@@ -178,14 +196,13 @@ const profileSlice = createSlice({
 
         })
         .addCase(changePassword.fulfilled, (state, action) => {
-
+            console.log(action.payload)
             if(action.payload.type === 'error'){
                 state.status = "failed";
                 state.mess = action.payload.mess
             }else{
                 state.status = "succeeded";
                 state.mess = action.payload.mess
-
             }
             state.changePass = true
 

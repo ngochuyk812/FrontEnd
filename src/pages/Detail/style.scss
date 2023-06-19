@@ -61,3 +61,14 @@
   margin-top: 58px;
   padding-top: 20px;
 }
+
+.detail_title{
+
+}
+.detail_title > h1{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+}

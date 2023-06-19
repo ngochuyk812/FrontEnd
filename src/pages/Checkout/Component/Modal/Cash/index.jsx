@@ -24,8 +24,8 @@ function Cash({ idUser, sumPrice, callback }) {
   let user = useSelector((state) => {
     return state.auth.user;
   });
-  const [name, setName] = useState(user.name);
-  const [sdt, setSdt] = useState(user.phoneNumber);
+  const [name, setName] = useState(user.fullName);
+  const [sdt, setSdt] = useState(user.phone);
   const [address, setAddress] = useState(user.address);
   const [note, setNote] = useState("");
   const getProduct = (id) => {
