@@ -149,7 +149,7 @@ function Item({ item }) {
       </div>
 
       <Link
-        to={`${process.env.REACT_APP_HOST_SERVER}/detail/${product.id}`}
+        to={`${process.env.REACT_APP_CLIENT}/detail/${product.id}`}
         className="cart-item-link"
       >
         {" "}

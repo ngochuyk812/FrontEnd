@@ -17,6 +17,7 @@ import { commentReviewPost } from "../../redux/slice/detailSlice";
 import { addItemIntoCart } from "../../redux/slice/cartSlice";
 import { addNotify } from "../../redux/slice/notifySlice";
 import { colors } from "../../components/Notify/Notify";
+import {changeStatus} from "../../redux/slice/productSlice";
 
 Index.propTypes = {};
 
@@ -29,6 +30,10 @@ function Index(props) {
     const [imageActive, setImageActive] = useState(0);
     const [colorActive, setColorActive] = useState("");
     console.log(product);
+
+    console.log(789)
+
+    console.log(user)
     useEffect(() => {
         dispatch(getProduct(id));
         dispatch(loadComment(id));
@@ -146,6 +151,69 @@ function Index(props) {
     const handleInputChange = (event) => {
         setNewComment(event.target.value);
     };
+    const status = useSelector((state) => state.cart.error);
+    const numberOfProducts = () => {
+        for (let index = 0; index < product.quantity_by_featured.length; index++) {
+            if (product.quantity_by_featured[index].quantity > 0) {
+                return product.quantity_by_featured[index].color;
+            }
+        }
+        return null;
+    };
+
+    const check = numberOfProducts();
+    const handelAddCart = (e) => {
+        e.preventDefault();
+        if (user != null) {
+            if (numberOfProducts() != null) {
+                dispatch(
+                    addItemIntoCart({
+                        ...product,
+                        color: numberOfProducts(),
+                        idUser: user.id,
+                    })
+                );
+            } else {
+                dispatch(
+                    addNotify({
+                        title: "Thất bại",
+                        content: "Sản phẩm đã hết hàng",
+                        color: colors.error,
+                    })
+                );
+            }
+            handleAfterAddItemCarts();
+        } else {
+            dispatch(
+                addNotify({
+                    title: "Thất bại",
+                    content: "Vui lòng đăng nhập!",
+                    color: colors.error,
+                })
+            );
+        }
+    };
+    const handleAfterAddItemCarts = async () => {
+        if (status !== null) {
+            dispatch(
+                addNotify({
+                    title: "Thất bại",
+                    content: "Thêm sản phẩm khong thành công",
+                    color: colors.error,
+                })
+            );
+        } else {
+            dispatch(changeStatus({ id: product.id, type: 1 }));
+            // changeQuantity
+            dispatch(
+                addNotify({
+                    title: "Thành công",
+                    content: "Đã Thêm sản phẩm vào giỏ hàng",
+                    color: colors.success,
+                })
+            );
+        }
+    };
 
     return (
         <div style={{ backgroundColor: "lightgray" }}>
@@ -250,7 +318,10 @@ function Index(props) {
                                     })}
                                 </div>
                             </div>
-                            <button type="button" className="btn btn-primary px-5">
+                            <button type="button" className={"btn btn-primary px-5" + (check == null ? " disable" : "")}
+                                    disabled={check == null} onClick={(e) => {
+                                handelAddCart(e);
+                            }} >
                                 Add to Cart
                             </button>
                         </div>
