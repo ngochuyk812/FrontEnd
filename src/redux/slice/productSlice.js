@@ -10,6 +10,7 @@ const initialState = {
 
 };
 export const loadProducts = createAsyncThunk("auth/products", async () => {
+  console.log(process.env.REACT_APP_API)
   const response = await axios.get(process.env.REACT_APP_API + "/products");
   let data = response.data;
   return data;
