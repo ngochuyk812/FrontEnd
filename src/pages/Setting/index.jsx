@@ -19,6 +19,7 @@ function Index(props) {
     const refP = useRef(null)
     const refPN = useRef(null)
     const refRP = useRef(null)
+    const user = useSelector(state => state.auth.user)
 
 
     const updateEvent = ()=>{
@@ -47,15 +48,23 @@ function Index(props) {
             dispatch(addNotify({title:"Thay đổi mật khẩu", content:"Mật khẩu không quá ngắn", color:colors.error}))
             return
         }
-        dispatch(changePassword({password, passwordNew}))
+        if(!user){
+            dispatch(addNotify({title:"Thay đổi mật khẩu", content:"Vui lòng tải lại trang và thực hiện lại", color:colors.error}))
+            return
+        }
+        console.log(user)
+
+        dispatch(changePassword({password, passwordNew, id: user.id}))
 
     }
     const status = useSelector(state => state.auth.status)
     const mess = useSelector(state => state.auth.mess)
     const changePass = useSelector(state => state.auth.changePass)
-
     useEffect(()=>{
-        if(mess !== ''&& changePass){
+        console.log(mess, changePass , "Dsdsd", user)
+        if(mess !== ''&& changePass ){
+            if(user === undefined)
+                return
             if(status === 'failed' ){
                 dispatch(addNotify({title:'Thay đổi mật khẩu', content: mess, color:colors.error}))
 

@@ -79,22 +79,30 @@ function Contact(props) {
         if(name && email && phone && feedback){
 
             dispatch(feedbackPost({
-                idUser: user.id,
-                userName: user.username,
-                content: feedback,
+                name,
+                email,
+                phone,
+                feedback
             }));
+
+
             dispatch(
                 addNotify({
                     title: "Thành công",
                     content: "Thêm feedback thành công",
                     color: colors.success,
                 })
+
             );
+            setName('')
+            setEmail('')
+            setPhone('')
+            setFeedback('')
         } else {
             dispatch(
                 addNotify({
                     title: "Thất bại",
-                    content: "Feedback thất bại",
+                    content: "Vui lòng nhập đầy đủ thông tin ",
                     color: colors.error,
                 })
             );

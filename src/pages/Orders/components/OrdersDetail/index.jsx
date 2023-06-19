@@ -90,6 +90,8 @@ function Index(props) {
                 <p><strong>Ngày giao hàng:</strong> {formatDate(order.deliveryDate)}</p>
                 <p><strong>Ngày đặt hàng:</strong> {order.orderDate.split(' ')[0]}</p>
                 <p><strong>Địa chỉ:</strong> {order.address}</p>
+                <p><strong>Chú thích:</strong> {order.note}</p>
+
                 <p><strong>Trạng thái:</strong> {getStatus(order.status_transport)}</p>
                 <Table dataSource={order.detail} columns={columns} />;
 
